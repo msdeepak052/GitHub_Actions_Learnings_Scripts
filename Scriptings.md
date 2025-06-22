@@ -176,3 +176,26 @@ jobs:
 * **`GMAIL_PASSWORD`**: Gmail app password.
 
 This setup ensures a robust, automated CI/CD pipeline with security measures, deployment automation, and monitoring integration.
+
+In the context of the GitHub Actions workflow, the `paths` configuration defines the files or directories that should trigger the workflow when there are changes.
+
+Here’s what each part means:
+
+### 1. **`'**/*.java'`**:
+
+* `**/` indicates any directory (recursively).
+* `*.java` means all files that have the `.java` extension.
+
+**Explanation**: This part tells GitHub Actions to trigger the workflow if any Java source file (with a `.java` extension) changes, no matter which directory it is in. For example, if a `.java` file in a subfolder is modified, the workflow will run.
+
+### 2. **`'**/pom.xml'`**:
+
+* `**/` indicates any directory (recursively).
+* `pom.xml` refers to the specific file named `pom.xml`.
+
+**Explanation**: This part tells GitHub Actions to trigger the workflow if the `pom.xml` file (which is a build configuration file for Maven projects) is modified, regardless of the directory it is located in.
+
+### **Summary**:
+
+* The workflow will be triggered when there are changes in any Java files (`.java`) or the `pom.xml` file anywhere in the repository, including in subdirectories.
+
