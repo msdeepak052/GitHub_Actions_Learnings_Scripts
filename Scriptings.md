@@ -199,3 +199,94 @@ Here’s what each part means:
 
 * The workflow will be triggered when there are changes in any Java files (`.java`) or the `pom.xml` file anywhere in the repository, including in subdirectories.
 
+### The line:
+
+```yaml
+uses: dawidd6/action-send-mail@v3
+```
+
+is referencing a **GitHub Action** that is used to send an email, specifically the **`dawidd6/action-send-mail`** action, which is maintained by the user `dawidd6`.
+
+### **Explanation**:
+
+* **`dawidd6/action-send-mail`**: This is the name of the GitHub Action, which is a pre-built reusable component created by the `dawidd6` GitHub user. It’s used to send emails directly from your GitHub Actions workflows.
+
+* **`@v3`**: This specifies the version of the action. Here, `v3` means you are using version 3 of this action. GitHub Actions supports versioning for each action, and this helps ensure stability in your workflows. By specifying `@v3`, you're using the latest stable release of version 3.
+
+### **What it does**:
+
+This GitHub Action sends an email from within your workflow. It uses an SMTP server to send the email to a designated recipient. You can customize the subject, body, and other aspects of the email.
+
+### **Common Use Case**:
+
+This action is often used in CD (Continuous Deployment) workflows to notify teams when deployments are successful or fail. For example, in your workflow, after a successful deployment, this action could be used to send a notification email to a specified Gmail address, letting the team know that the deployment was completed successfully.
+
+### **How it works**:
+
+To configure this action, you would typically need to provide:
+
+* SMTP server details (e.g., for Gmail: `smtp.gmail.com`)
+* SMTP server port (usually 587 for Gmail)
+* Your email credentials (username and app-specific password for Gmail, stored in GitHub secrets)
+* The subject and body of the email
+
+### Example:
+
+Here's a quick example of how this action might be used to send an email notification in a GitHub Actions workflow:
+
+```yaml
+- name: Send Deployment Notification Email
+  uses: dawidd6/action-send-mail@v3
+  with:
+    server_address: smtp.gmail.com
+    server_port: 587
+    username: ${{ secrets.GMAIL_USERNAME }}
+    password: ${{ secrets.GMAIL_PASSWORD }}
+    subject: "Deployment Successful"
+    to: "recipient-email@example.com"
+    body: "The deployment to the production environment was successful."
+```
+
+In this example:
+
+* The action connects to Gmail's SMTP server (`smtp.gmail.com`).
+* It uses the username and password stored as secrets in GitHub to authenticate.
+* It sends an email to the provided recipient email address with the subject "Deployment Successful" and a body message saying the deployment was successful.
+
+### **Summary**:
+
+The `dawidd6/action-send-mail@v3` action is a pre-configured tool for sending emails through SMTP directly from GitHub Actions workflows, which can be useful for notifying stakeholders about important events like successful deployments.
+
+The line:
+
+```yaml
+branches:
+  - main
+```
+
+is used to specify the **branch** in the repository that will trigger the workflow. In this case, it means the GitHub Actions workflow will be triggered whenever there are changes pushed to the `main` branch.
+
+### **Regarding self-hosted vs shared runners**:
+
+* This line (`branches: - main`) **does not determine whether the runner is self-hosted or shared**.
+* The **type of runner** (whether it’s self-hosted or shared) is determined by the `runs-on` keyword in the job configuration, like:
+
+```yaml
+runs-on: ubuntu-latest  # This specifies a shared runner
+```
+
+If you use `runs-on: ubuntu-latest`, it means you're using GitHub's **shared runner** (provided by GitHub). If you want to use a **self-hosted runner**, you would specify it like:
+
+```yaml
+runs-on: [self-hosted, linux]
+```
+
+This would indicate that the job should run on a self-hosted runner with the Linux operating system.
+
+### **In Summary**:
+
+* **`branches: - main`** only defines the triggering branch (in this case, the `main` branch).
+* The **runner type (self-hosted or shared)** is specified using the `runs-on` keyword, not the `branches` configuration.
+
+
+
