@@ -45,6 +45,11 @@ jobs:
       - name: List files in current directory
         run: ls -la
 ```
+### Run from Github Actions
+
+![image](https://github.com/user-attachments/assets/2abbeec2-b564-4e17-8def-7174cbca2bb9)
+
+![image](https://github.com/user-attachments/assets/3fa9476d-858e-41a8-ab86-7a18bfbc7bca)
 
 ---
 ### **2. Basic Workflow Example**
@@ -203,4 +208,106 @@ with:
 2. Explore the [GitHub Actions Marketplace](https://github.com/marketplace?type=actions) for pre-built actions.
 3. Learn about `needs` for job dependencies.
 
-Let me know which topic you'd like to dive into next! (e.g., Docker integration, custom actions, environments). 🚀
+### **Manual Trigger in GitHub Actions (`workflow_dispatch`)**
+To manually trigger a workflow (without relying on `push` or `pull_request`), use the `workflow_dispatch` event. This adds a **"Run workflow"** button in the GitHub UI.
+
+---
+
+### **Example: Basic Manual Trigger**
+```yaml
+name: Manual Trigger Demo
+on:
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Greet
+        run: echo "Hello, GitHub Actions! 🎉"
+```
+
+#### **How to Run:**
+1. Push this workflow to your repo.
+2. Go to **Actions** tab → Select the workflow → Click **"Run workflow"**.
+
+---
+
+### **Advanced: Manual Trigger with Inputs**
+You can pass inputs (e.g., environment, version) when triggering manually:
+
+```yaml
+name: Deploy with Inputs
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deploy environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+      version:
+        description: 'App version'
+        required: false
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print inputs
+        run: |
+          echo "Environment: ${{ github.event.inputs.environment }}"
+          echo "Version: ${{ github.event.inputs.version || 'latest' }}"
+```
+
+#### **How to Run:**
+1. In the GitHub UI, you’ll see a form to fill in inputs:  
+   ![Manual Trigger Inputs](https://docs.github.com/assets/images/help/repository/manual-trigger-workflow.png)
+2. Click **"Run workflow"** after filling the fields.
+
+---
+
+### **Key Notes:**
+1. **`workflow_dispatch` vs `repository_dispatch`**:
+   - `workflow_dispatch`: Trigger from GitHub UI or API.
+   - `repository_dispatch`: Trigger via API only (useful for external events).
+
+2. **GitHub CLI Alternative**:
+   ```bash
+   gh workflow run deploy.yml -f environment=production -f version=1.0
+   ```
+
+3. **Default Values**: Use `default` for optional inputs.
+
+---
+
+### **Real-World Use Case**
+```yaml
+name: Deploy to AWS
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'AWS environment'
+        options: [dev, prod]
+      confirm:
+        description: 'Type "yes" to deploy'
+        required: true
+
+jobs:
+  deploy:
+    if: github.event.inputs.confirm == 'yes'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying to ${{ github.event.inputs.env }}..."
+```
+
+This ensures manual confirmation before deployment.
+
+---
+
+Let me know if you'd like to explore **scheduled triggers (`on: schedule`)** or **API-based triggers** next! 🚀
