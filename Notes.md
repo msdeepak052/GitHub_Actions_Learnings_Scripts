@@ -345,6 +345,14 @@ jobs:
 - All 3 jobs (`test-linux`, `test-windows`, `test-macos`) run **simultaneously**.
 - No dependency means they execute independently.
 
+![image](https://github.com/user-attachments/assets/c35236bd-4473-46ae-bc88-36ed391ae07e)
+
+![image](https://github.com/user-attachments/assets/e11eba46-eb51-4fa3-9ef3-a6e950f33b0e)
+
+
+![image](https://github.com/user-attachments/assets/fe57df9f-8e08-400e-81cf-7b8af0c5fb01)
+
+
 ---
 
 ## **2. Dependent Jobs (Sequential Execution)**
