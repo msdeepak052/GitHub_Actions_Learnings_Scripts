@@ -1,0 +1,19 @@
+name: Parallel Jobs Example
+on:
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  test-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running tests on Linux"
+
+  test-windows:
+    runs-on: windows-latest
+    steps:
+      - run: echo "Running tests on Windows"
+
+  test-macos:
+    runs-on: macos-latest
+    steps:
+      - run: echo "Running tests on macOS"
