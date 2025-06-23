@@ -1434,6 +1434,8 @@ jobs:
 
 🔐 **Use case**: Hide sensitive tokens from showing up in workflow logs.
 
+![image](https://github.com/user-attachments/assets/5e5e451a-787f-4bd9-ba41-128e2433e324)
+
 ---
 
 ## ✅ **Example 4: Add Warning and Error Annotations**
