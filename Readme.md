@@ -1287,6 +1287,11 @@ jobs:
       - name: Use output
         run: echo "App version is ${{ steps.set_version.outputs.version }}"
 ```
+![image](https://github.com/user-attachments/assets/d32b6a76-4946-49cb-9be2-d82c70364429)
+
+![image](https://github.com/user-attachments/assets/cf3abcb9-c3ea-44b1-b581-fcc3c32a22ae)
+
+---
 
 🔁 **Use case**: Pass a version or build number between steps.
 
