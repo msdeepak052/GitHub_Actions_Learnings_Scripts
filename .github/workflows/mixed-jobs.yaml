@@ -1,4 +1,4 @@
-name: Dependent Jobs Example
+name: Mixed Jobs Example
 on:
   workflow_dispatch:  # Allows manual trigger
 
