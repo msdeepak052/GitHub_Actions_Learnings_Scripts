@@ -1,0 +1,13 @@
+name: Mask Secrets
+
+on: [workflow_dispatch]
+
+jobs:
+  mask-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Mask a token
+        run: |
+          echo "::add-mask::my-secret-token-123"
+          echo "Using token: my-secret-token-123"
