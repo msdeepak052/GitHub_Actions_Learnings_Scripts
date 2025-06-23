@@ -1570,6 +1570,9 @@ jobs:
 
 ---
 
+### Link
+[Userguide for Workflow Commands](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions)
+
 ## 🔐 Tip for Secrets in Real CI/CD
 
 Replace hardcoded tokens like `my-deploy-token-abc123` with GitHub secrets:
