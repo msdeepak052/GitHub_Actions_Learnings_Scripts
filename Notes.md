@@ -18,6 +18,16 @@ GitHub Actions is a CI/CD (Continuous Integration/Continuous Deployment) platfor
 
 ![3](https://github.com/user-attachments/assets/5ad88114-5a18-463b-84c9-517bccb088dc)
 
+![image](https://github.com/user-attachments/assets/90b02078-6929-49db-aebd-9c1f2bc86aa1)
+
+![image](https://github.com/user-attachments/assets/0c8bf205-5f0b-44fa-9b53-3797548489ac)
+
+![image](https://github.com/user-attachments/assets/2b586d7d-359e-4b77-9b39-4b91784a7eb8)
+
+
+![image](https://github.com/user-attachments/assets/6de56831-b234-4332-b029-3021f2700a0c)
+
+
 ---
 
 ### **2. Basic Workflow Example**
