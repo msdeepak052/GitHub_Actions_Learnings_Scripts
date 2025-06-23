@@ -1,0 +1,14 @@
+name: Log Annotations
+
+on: [workflow_dispatch]
+
+jobs:
+  log-annotations:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Annotate logs
+        run: |
+          echo "::warning file=main.js,line=42::Deprecated API usage"
+          echo "::error file=main.js,line=99::Null pointer exception"
+          echo "::debug::This is a debug message (shown only with ACTIONS_STEP_DEBUG=true)"
