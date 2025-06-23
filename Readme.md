@@ -913,3 +913,568 @@ You’ll now be able to:
 ---
 
 
+Skipping workflows in **GitHub Actions** means conditionally preventing a workflow or a job or a step from running — based on specific criteria like file changes, commit messages, branch names, or manual inputs.
+
+---
+
+## 🟨 Why Skip Workflows?
+
+To:
+
+* Save CI/CD resources
+* Avoid unnecessary runs on doc or README updates
+* Prevent redundant runs on specific branches
+* Allow manual control over executions
+
+---
+
+## ✅ Ways to Skip Workflows
+
+---
+
+### 🔹 1. **Skip via Commit Message (`[skip ci]`)**
+
+#### 🔧 Behavior:
+
+If your commit message contains `[skip ci]` or `[ci skip]`, **GitHub Actions will not run any workflow at all**.
+
+#### ✅ Example:
+
+```bash
+git commit -m "Update README [skip ci]"
+```
+
+🟡 **Works globally** across all workflows.
+
+---
+
+### 🔹 2. **Use `if:` Conditions at Workflow Level**
+
+You can stop a job or step using `if:` conditions.
+
+#### ✅ Example: Skip workflow if not on `main` or `develop`
+
+```yaml
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Only runs on main or develop"
+```
+
+📌 **Important**: `github.ref` contains the full `refs/heads/<branch>`.
+
+---
+
+### 🔹 3. **Use `paths` / `paths-ignore` to Skip Based on File Changes**
+
+In the `on:` trigger section, use these filters:
+
+#### ✅ Example: Run only when `src/` changes
+
+```yaml
+on:
+  push:
+    paths:
+      - 'src/**'
+```
+
+#### ✅ Example: Ignore changes to docs
+
+```yaml
+on:
+  push:
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+```
+
+📘 **Use Case**: Skip when only non-code files are changed.
+
+---
+
+### 🔹 4. **Use Manual Input to Skip with `workflow_dispatch`**
+
+#### ✅ Example: Use an input to skip optional jobs
+
+```yaml
+on:
+  workflow_dispatch:
+    inputs:
+      run_tests:
+        type: boolean
+        default: true
+        description: 'Run test suite?'
+
+jobs:
+  test:
+    if: ${{ inputs.run_tests == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running tests"
+```
+
+🧪 **Try**: Trigger the workflow manually and uncheck the `run_tests` input.
+
+---
+
+### 🔹 5. **Use `continue-on-error` + Early Exit**
+
+Sometimes you want to **exit a job or step early** without failing.
+
+#### ✅ Example:
+
+```yaml
+- name: Conditional exit
+  run: |
+    if [ "$GITHUB_REF" != "refs/heads/main" ]; then
+      echo "Skipping on non-main branch"
+      exit 0
+    fi
+    echo "Continue logic here"
+  continue-on-error: true
+```
+---
+Here's a **short note** on **skipping workflow runs in GitHub Actions**:
+
+---
+
+## 🔹 Skipping Workflow Runs – Summary
+
+### ✅ **Supported Events**
+
+Skip instructions apply only to workflows triggered by:
+
+* `push`
+* `pull_request`
+
+---
+
+### ✅ **How to Skip**
+
+Add any of the following **to the commit message**:
+
+```
+[skip ci]
+[ci skip]
+[no ci]
+[skip actions]
+[actions skip]
+```
+
+OR
+
+Use a **trailer** at the end of the commit message:
+
+```
+<commit message>
+
+
+skip-checks: true
+```
+
+> Use `--cleanup=verbatim` with `git commit` to preserve blank lines.
+
+---
+
+### ⚠️ Important Notes
+
+* ❌ Does **not** work for `pull_request_target` or other events.
+* ✅ Skipped workflows show **"Pending"** checks – blocking PR merges if required checks are enforced.
+* ✅ To unblock, push another commit **without** skip keywords.
+
+---
+
+Let me know if you'd like a real example commit or workflow showing this.
+
+---
+
+## ✅ Summary Table
+
+| Technique                | Scope          | When to Use                                |
+| ------------------------ | -------------- | ------------------------------------------ |
+| `[skip ci]`              | Whole workflow | Skip entirely via commit message           |
+| `if:` condition          | Job/Step       | Skip based on branch, input, env, etc.     |
+| `paths` / `paths-ignore` | Trigger-level  | Skip based on changed files                |
+| `workflow_dispatch`      | Trigger-level  | Use manual inputs to control job execution |
+| Early exit in `run` step | Step-level     | Skip via script logic inside the workflow  |
+
+---
+
+## 💡 Best Practices
+
+* ✅ Combine `paths-ignore` with `branches` for fine-grained control.
+* ✅ Use `workflow_dispatch` inputs for manual override workflows.
+* ✅ Don’t rely **only** on `[skip ci]` — it's not flexible or explicit in code.
+* ✅ Use `if:` for logic that's easier to maintain and debug.
+
+---
+
+
+---
+
+Here’s a complete and clear explanation of **workflow commands** in GitHub Actions, with good examples and key highlights.
+
+---
+
+## 🔧 What Are Workflow Commands?
+
+**Workflow commands** are special `echo` statements in GitHub Actions that allow a step to:
+
+* Set environment variables
+* Mask secrets
+* Add logging annotations
+* Control step output
+
+They are used **within `run` steps** to communicate with the GitHub Actions runner.
+
+---
+
+## 📌 Syntax
+
+```bash
+echo "::command-name parameter=value::message"
+```
+
+---
+
+## 📘 Common Workflow Commands with Examples
+
+---
+
+### 1. 🧪 `set-output` (Deprecated → Use `outputs` + `GITHUB_OUTPUT` instead)
+
+#### ✅ Old:
+
+```bash
+echo "::set-output name=my_var::Hello"
+```
+
+#### ✅ New Way (Preferred):
+
+```yaml
+- name: Set output
+  id: example
+  run: echo "my_var=Hello" >> "$GITHUB_OUTPUT"
+
+- name: Use output
+  run: echo "Output was ${{ steps.example.outputs.my_var }}"
+```
+
+---
+
+### 2. 🔒 `add-mask` — Mask sensitive data in logs
+
+#### ✅ Example:
+
+```yaml
+- name: Mask a secret
+  run: |
+    echo "::add-mask::my-super-secret-token"
+    echo "This will be masked: my-super-secret-token"
+```
+
+🔐 Output:
+
+```
+This will be masked: ***
+```
+
+---
+
+### 3. 🧪 `set-env` (Deprecated → Use `GITHUB_ENV` instead)
+
+#### ✅ Preferred:
+
+```yaml
+- name: Set env variable
+  run: echo "MY_ENV=foobar" >> "$GITHUB_ENV"
+
+- name: Use env
+  run: echo "Env is $MY_ENV"
+```
+
+---
+
+### 4. 📘 `warning`, `error`, `debug` — Annotate logs
+
+#### ✅ Example:
+
+```yaml
+- name: Add log annotations
+  run: |
+    echo "::warning file=app.js,line=10::Deprecated function"
+    echo "::error file=main.py,line=5::Syntax error"
+    echo "::debug::Only visible with ACTIONS_STEP_DEBUG=true"
+```
+
+🔎 Output:
+
+* 🟡 Warning with file & line reference
+* 🔴 Error
+* 🐞 Debug (only with `ACTIONS_STEP_DEBUG=true`)
+
+---
+
+### 5. ✅ `stop-commands` — Temporarily disable interpretation
+
+#### ✅ Example:
+
+```yaml
+- name: Stop interpreting workflow commands
+  run: |
+    echo "::stop-commands::stopmarker"
+    echo "::set-env name=SHOULD_NOT_BE_SET::bad"
+    echo "This will not be interpreted"
+    echo "::stopmarker::"
+```
+
+📌 Used when output may accidentally contain command syntax.
+
+---
+
+## 💡 Key Points to Remember
+
+| Feature                | Use it for                          | Status      |
+| ---------------------- | ----------------------------------- | ----------- |
+| `GITHUB_OUTPUT`        | Passing values between steps        | ✅ Preferred |
+| `add-mask`             | Hiding sensitive info in logs       | ✅ Important |
+| `GITHUB_ENV`           | Set env variables                   | ✅ Preferred |
+| `::warning`, `::error` | Annotating logs with context        | ✅ Useful    |
+| `stop-commands`        | Prevent misinterpretation in output | ✅ Rare      |
+| `::debug::`            | Log only in debug mode              | ✅ Optional  |
+
+---
+
+## 🔧 Use Case Example: Pass Value Between Steps
+
+```yaml
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set output value
+        id: set_step
+        run: echo "greeting=Hello, World!" >> "$GITHUB_OUTPUT"
+
+      - name: Print output
+        run: echo "Message: ${{ steps.set_step.outputs.greeting }}"
+```
+
+---
+
+Here are **a few complete and practical examples** of using **GitHub Actions workflow commands** inside a full `workflow.yml`. These show real-world usage like setting environment variables, passing data between steps, masking secrets, and adding log annotations.
+
+---
+
+## ✅ **Example 1: Set Output from One Step and Use in Another**
+
+```yaml
+name: Set and Use Output
+
+on: [workflow_dispatch]
+
+jobs:
+  output-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set output value
+        id: set_version
+        run: echo "version=1.2.3" >> "$GITHUB_OUTPUT"
+
+      - name: Use output
+        run: echo "App version is ${{ steps.set_version.outputs.version }}"
+```
+
+🔁 **Use case**: Pass a version or build number between steps.
+
+---
+
+## ✅ **Example 2: Set Environment Variable Across Steps**
+
+```yaml
+name: Set Env Variable
+
+on: [workflow_dispatch]
+
+jobs:
+  env-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Define environment variable
+        run: echo "DEPLOY_ENV=production" >> "$GITHUB_ENV"
+
+      - name: Use environment variable
+        run: echo "Deploying to $DEPLOY_ENV"
+```
+
+🌍 **Use case**: Define and use variables like environment (`dev`, `staging`, `prod`) across multiple steps.
+
+---
+
+## ✅ **Example 3: Mask Sensitive Values in Logs**
+
+```yaml
+name: Mask Secrets
+
+on: [workflow_dispatch]
+
+jobs:
+  mask-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Mask a token
+        run: |
+          echo "::add-mask::my-secret-token-123"
+          echo "Using token: my-secret-token-123"
+```
+
+🔐 **Use case**: Hide sensitive tokens from showing up in workflow logs.
+
+---
+
+## ✅ **Example 4: Add Warning and Error Annotations**
+
+```yaml
+name: Log Annotations
+
+on: [workflow_dispatch]
+
+jobs:
+  log-annotations:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Annotate logs
+        run: |
+          echo "::warning file=main.js,line=42::Deprecated API usage"
+          echo "::error file=main.js,line=99::Null pointer exception"
+          echo "::debug::This is a debug message (shown only with ACTIONS_STEP_DEBUG=true)"
+```
+
+📘 **Use case**: Highlight issues in logs for better visibility during CI runs.
+
+---
+
+## ✅ **Example 5: Skip Interpreting Workflow Commands**
+
+```yaml
+name: Stop Commands
+
+on: [workflow_dispatch]
+
+jobs:
+  stop-commands-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Stop command interpretation
+        run: |
+          echo "::stop-commands::my-end"
+          echo "::set-env name=SHOULD_NOT_RUN::hello"
+          echo "This won't be interpreted"
+          echo "::my-end::"
+          echo "Now commands work again"
+```
+
+🛑 **Use case**: Prevent accidental interpretation of dangerous-looking command output.
+
+---
+Perfect! Here's a **real-world multi-step GitHub Actions workflow** combining:
+
+* ✅ `Build/Test workflow`
+* ✅ `Deployments`
+* ✅ `Matrix jobs`
+* ✅ `Conditional logic`
+* ✅ Workflow commands (`GITHUB_ENV`, `GITHUB_OUTPUT`, `add-mask`, logging)
+
+---
+
+## 🔧 **Full Real-World Workflow Example**
+
+```yaml
+name: CI/CD Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build & Test (Node.js Matrix)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [16, 18]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: |
+          npm test
+          echo "test_result=success" >> $GITHUB_OUTPUT
+        id: test
+
+      - name: Set environment stage
+        run: echo "STAGE_ENV=staging" >> $GITHUB_ENV
+
+  deploy:
+    name: Deploy to Production
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: ${{ always() && contains(needs.build-and-test.result, 'success') }}
+    steps:
+      - name: Mask deploy token
+        run: echo "::add-mask::my-deploy-token-abc123"
+
+      - name: Set deploy version
+        run: echo "deploy_version=1.2.${{ github.run_number }}" >> $GITHUB_OUTPUT
+        id: version
+
+      - name: Echo logs with annotations
+        run: |
+          echo "::warning::Deployment will proceed to PROD"
+          echo "::debug::STAGE_ENV is $STAGE_ENV"
+          echo "Deploying version ${{ steps.version.outputs.deploy_version }} using token ***"
+```
+
+---
+
+## 🔍 What's Happening Here?
+
+| Feature                  | Where Used                                             |
+| ------------------------ | ------------------------------------------------------ |
+| 🔄 **Matrix job**        | `node: [16, 18]` — runs build/test in parallel         |
+| 📦 **Build/Test**        | `npm install` + `npm test`                             |
+| 🔐 **Masking secrets**   | `add-mask::my-deploy-token-abc123`                     |
+| 🌍 **Set env variable**  | `echo STAGE_ENV=staging >> $GITHUB_ENV`                |
+| 📤 **Set output**        | `echo deploy_version=... >> $GITHUB_OUTPUT`            |
+| ⚠️ **Log annotation**    | `::warning::`, `::debug::`                             |
+| ✅ **Conditional deploy** | `if: contains(needs.build-and-test.result, 'success')` |
+
+---
+
+## 🔐 Tip for Secrets in Real CI/CD
+
+Replace hardcoded tokens like `my-deploy-token-abc123` with GitHub secrets:
+
+```yaml
+- name: Mask token
+  run: echo "::add-mask::${{ secrets.DEPLOY_TOKEN }}"
+```
+
+---
+
+
