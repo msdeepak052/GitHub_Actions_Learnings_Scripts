@@ -1,0 +1,15 @@
+name: Set and Use Output
+
+on: [workflow_dispatch]
+
+jobs:
+  output-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set output value
+        id: set_version
+        run: echo "version=1.2.3" >> "$GITHUB_OUTPUT"
+
+      - name: Use output
+        run: echo "App version is ${{ steps.set_version.outputs.version }}"
