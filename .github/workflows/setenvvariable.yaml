@@ -1,0 +1,14 @@
+name: Set Env Variable
+
+on: [workflow_dispatch]
+
+jobs:
+  env-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Define environment variable
+        run: echo "DEPLOY_ENV=production" >> "$GITHUB_ENV"
+
+      - name: Use environment variable
+        run: echo "Deploying to $DEPLOY_ENV"
