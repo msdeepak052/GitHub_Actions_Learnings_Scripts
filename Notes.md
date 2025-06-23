@@ -24,8 +24,9 @@ GitHub Actions is a CI/CD (Continuous Integration/Continuous Deployment) platfor
 
 ![image](https://github.com/user-attachments/assets/2b586d7d-359e-4b77-9b39-4b91784a7eb8)
 
-
 ![image](https://github.com/user-attachments/assets/6de56831-b234-4332-b029-3021f2700a0c)
+
+![image](https://github.com/user-attachments/assets/bcf9bf18-27e1-450a-ab2a-7f97746824e0)
 
 
 ---
@@ -310,4 +311,230 @@ This ensures manual confirmation before deployment.
 
 ---
 
-Let me know if you'd like to explore **scheduled triggers (`on: schedule`)** or **API-based triggers** next! 🚀
+# **Parallel and Dependent Jobs in GitHub Actions**
+
+GitHub Actions allows you to run jobs **in parallel** for faster execution or **sequentially** (dependent jobs) where one job waits for another to complete. Below is a detailed breakdown with examples.
+
+---
+
+## **1. Parallel Jobs**
+Jobs run in parallel by default (unless dependencies are specified). This is useful for tasks like **testing across multiple OSes or Node.js versions**.
+
+### **Example: Parallel Jobs**
+```yaml
+name: Parallel Jobs Example
+on: [push]
+
+jobs:
+  test-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running tests on Linux"
+
+  test-windows:
+    runs-on: windows-latest
+    steps:
+      - run: echo "Running tests on Windows"
+
+  test-macos:
+    runs-on: macos-latest
+    steps:
+      - run: echo "Running tests on macOS"
+```
+**Key Points:**
+- All 3 jobs (`test-linux`, `test-windows`, `test-macos`) run **simultaneously**.
+- No dependency means they execute independently.
+
+---
+
+## **2. Dependent Jobs (Sequential Execution)**
+Use `needs` to define job dependencies. A job will only run if its dependent jobs succeed.
+
+### **Example: Sequential Jobs**
+```yaml
+name: Dependent Jobs Example
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Building the app..."
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build  # Waits for 'build' to finish
+    steps:
+      - run: echo "Running tests..."
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test   # Waits for 'test' to finish
+    steps:
+      - run: echo "Deploying to production..."
+```
+**Key Points:**
+- `deploy` runs **only after** `test` succeeds.
+- `test` runs **only after** `build` succeeds.
+- If `build` fails, `test` and `deploy` are **skipped**.
+
+---
+
+## **3. Mixed Parallel & Dependent Jobs**
+You can combine both approaches for complex workflows.
+
+### **Example: Parallel Tests → Sequential Deployment**
+```yaml
+name: Mixed Parallel and Sequential
+on: [push]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running linter..."
+
+  test-unit:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running unit tests..."
+
+  test-integration:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running integration tests..."
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [lint, test-unit, test-integration]  # Waits for all 3 jobs
+    steps:
+      - run: echo "Deploying after all checks pass..."
+```
+**Key Points:**
+- `lint`, `test-unit`, and `test-integration` run **in parallel**.
+- `deploy` runs **only after all 3 jobs complete successfully**.
+
+---
+
+## **4. Job Status Conditions**
+Control job execution based on previous job status using `if`.
+
+### **Example: Conditional Deployment**
+```yaml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Building..."
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - run: echo "Testing..."
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    if: success()  # Only runs if 'test' succeeds
+    steps:
+      - run: echo "Deploying..."
+```
+
+**Key Conditions:**
+- `if: success()` → Runs if previous job succeeds.
+- `if: failure()` → Runs if previous job fails (useful for notifications).
+- `if: always()` → Runs regardless of previous job status.
+
+---
+
+## **5. Matrix Strategy (Parallel Jobs with Variations)**
+Run the same job in parallel with different configurations (e.g., OS, Node.js versions).
+
+### **Example: Testing Across Multiple Node.js Versions**
+```yaml
+name: Matrix Example
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]  # Runs 3 parallel jobs
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm test
+```
+**Key Points:**
+- Creates **3 parallel jobs** for each `node-version`.
+- Useful for **cross-version compatibility testing**.
+
+---
+
+## **6. Important Notes**
+1. **Job Dependencies**:
+   - Use `needs` to define order.
+   - Jobs without `needs` run in parallel.
+2. **Max Parallel Jobs**:
+   - GitHub Free Tier: **20 concurrent jobs**.
+   - GitHub Pro/Team: **40 concurrent jobs**.
+3. **Job Status**:
+   - `success()`, `failure()`, `always()` control execution flow.
+4. **Matrix Jobs**:
+   - Great for testing multiple environments in parallel.
+
+---
+
+## **Real-World Use Cases**
+### **1. CI/CD Pipeline with Parallel Tests**
+```yaml
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run lint
+
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - run: npm test
+
+  deploy:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run deploy
+```
+- `lint` and `test` run in parallel.
+- `deploy` waits for both to complete.
+
+### **2. Conditional Deployment on Main Branch**
+```yaml
+deploy:
+  needs: test
+  if: github.ref == 'refs/heads/main' && success()
+  runs-on: ubuntu-latest
+  steps:
+    - run: echo "Deploying to production..."
+```
+- Only deploys if:
+  - Branch is `main`.
+  - `test` job succeeds.
+
+---
+
+## **Final Summary**
+| Concept | Syntax | Use Case |
+|---------|--------|----------|
+| **Parallel Jobs** | No `needs` | Run independent tasks simultaneously |
+| **Dependent Jobs** | `needs: [job1, job2]` | Run jobs in sequence |
+| **Matrix Strategy** | `strategy.matrix` | Test across multiple environments |
+| **Conditional Jobs** | `if: success()` | Control execution based on status |
+
