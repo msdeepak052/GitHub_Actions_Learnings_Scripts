@@ -1,0 +1,51 @@
+name: CI/CD Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build & Test (Node.js Matrix)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [16, 18]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: |
+          npm test
+          echo "test_result=success" >> $GITHUB_OUTPUT
+        id: test
+
+      - name: Set environment stage
+        run: echo "STAGE_ENV=staging" >> $GITHUB_ENV
+
+  deploy:
+    name: Deploy to Production
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: ${{ always() && contains(needs.build-and-test.result, 'success') }}
+    steps:
+      - name: Mask deploy token
+        run: echo "::add-mask::my-deploy-token-abc123"
+
+      - name: Set deploy version
+        run: echo "deploy_version=1.2.${{ github.run_number }}" >> $GITHUB_OUTPUT
+        id: version
+
+      - name: Echo logs with annotations
+        run: |
+          echo "::warning::Deployment will proceed to PROD"
+          echo "::debug::STAGE_ENV is $STAGE_ENV"
+          echo "Deploying version ${{ steps.version.outputs.deploy_version }} using token ***"
