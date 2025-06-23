@@ -416,34 +416,41 @@ You can combine both approaches for complex workflows.
 
 ### **Example: Parallel Tests → Sequential Deployment**
 ```yaml
-name: Mixed Parallel and Sequential
-on: [push]
+name: Dependent Jobs Example
+on:
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Running linter..."
+      - name: Build the application
+        run: echo "Building the app..."
+      - name: Wait for 30 seconds
+        run: sleep 30s  # Linux/macOS (use 'Start-Sleep -Seconds 30' for Windows)
 
-  test-unit:
+  test:
     runs-on: ubuntu-latest
+    needs: build  # Waits for 'build' to finish
     steps:
-      - run: echo "Running unit tests..."
+      - name: Run tests
+        run: echo "Running tests..."
+      - name: Wait for 30 seconds
+        run: sleep 30s  # Linux/macOS (use 'Start-Sleep -Seconds 30' for Windows)
 
-  test-integration:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Running integration tests..."
 
   deploy:
-    runs-on: ubuntu-latest
-    needs: [lint, test-unit, test-integration]  # Waits for all 3 jobs
+    runs-on: ubuntu-latest   # Parallel job
     steps:
-      - run: echo "Deploying after all checks pass..."
+      - name: Deploy to production
+        run: echo "Deploying to production..."
+      - name: Wait for 30 seconds
+        run: sleep 30s  # Linux/macOS (use 'Start-Sleep -Seconds 30' for Windows)
+
 ```
 **Key Points:**
-- `lint`, `test-unit`, and `test-integration` run **in parallel**.
-- `deploy` runs **only after all 3 jobs complete successfully**.
+- `build`, `deploy` run **in parallel**.
+- `tests` runs **only after build job complete successfully**.
 
 ---
 
