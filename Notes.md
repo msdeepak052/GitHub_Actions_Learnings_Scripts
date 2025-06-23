@@ -12,8 +12,11 @@ GitHub Actions is a CI/CD (Continuous Integration/Continuous Deployment) platfor
 
 ---
 
-![WhatsApp Image 2025-06-23 at 10 59 18_6a8617cf](https://github.com/user-attachments/assets/9e1b99dd-dc98-489a-b099-7514da596d15)
+![1](https://github.com/user-attachments/assets/798632eb-7ad7-4547-8328-497f3c7e95b4)
 
+![2](https://github.com/user-attachments/assets/21d51292-6bad-424d-8096-ac26921cd6ae)
+
+![3](https://github.com/user-attachments/assets/5ad88114-5a18-463b-84c9-517bccb088dc)
 
 ---
 
