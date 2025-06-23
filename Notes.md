@@ -361,26 +361,49 @@ Use `needs` to define job dependencies. A job will only run if its dependent job
 ### **Example: Sequential Jobs**
 ```yaml
 name: Dependent Jobs Example
-on: [push]
+on:
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Building the app..."
+      - name: Build the application
+        run: echo "Building the app..."
+      - name: Wait for 30 seconds
+        run: sleep 30s  # Linux/macOS (use 'Start-Sleep -Seconds 30' for Windows)
 
   test:
     runs-on: ubuntu-latest
     needs: build  # Waits for 'build' to finish
     steps:
-      - run: echo "Running tests..."
+      - name: Run tests
+        run: echo "Running tests..."
+      - name: Wait for 30 seconds
+        run: sleep 30s  # Linux/macOS (use 'Start-Sleep -Seconds 30' for Windows)
+
 
   deploy:
     runs-on: ubuntu-latest
     needs: test   # Waits for 'test' to finish
     steps:
-      - run: echo "Deploying to production..."
+      - name: Deploy to production
+        run: echo "Deploying to production..."
+      - name: Wait for 30 seconds
+        run: sleep 30s  # Linux/macOS (use 'Start-Sleep -Seconds 30' for Windows)
+
 ```
+
+![image](https://github.com/user-attachments/assets/64b7f85b-2c9f-4502-8e98-abc9cbe9b38b)
+
+![image](https://github.com/user-attachments/assets/ad8c86dd-d899-46b1-bbba-ea207a6013b9)
+
+![image](https://github.com/user-attachments/assets/87669117-4aec-4f99-ad4c-ef32100957e7)
+
+![image](https://github.com/user-attachments/assets/ab4c04f2-eb1c-409e-a619-b0c12411c4c8)
+
+![image](https://github.com/user-attachments/assets/d21bb024-b9a3-4c1b-aee4-8fd6fee5322e)
+
 **Key Points:**
 - `deploy` runs **only after** `test` succeeds.
 - `test` runs **only after** `build` succeeds.
