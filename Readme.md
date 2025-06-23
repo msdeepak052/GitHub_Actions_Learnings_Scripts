@@ -1459,6 +1459,8 @@ jobs:
 
 📘 **Use case**: Highlight issues in logs for better visibility during CI runs.
 
+![image](https://github.com/user-attachments/assets/a6b59348-5aed-4b83-8ee5-c605cba4b09e)
+
 ---
 
 ## ✅ **Example 5: Skip Interpreting Workflow Commands**
@@ -1550,6 +1552,7 @@ jobs:
           echo "::debug::STAGE_ENV is $STAGE_ENV"
           echo "Deploying version ${{ steps.version.outputs.deploy_version }} using token ***"
 ```
+![image](https://github.com/user-attachments/assets/3e958c3b-6b29-42cb-837a-ce9bfe1d0d31)
 
 ---
 
