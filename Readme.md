@@ -452,7 +452,9 @@ jobs:
 - `build`, `deploy` run **in parallel**.
 - `tests` runs **only after build job complete successfully**.
 
+![image](https://github.com/user-attachments/assets/b404dedd-3f57-4198-8d1c-886e13aca2fa)
 
+![image](https://github.com/user-attachments/assets/ed91faaf-62f8-4e87-89c6-f2daeb9a54eb)
 
 ---
 
