@@ -1315,7 +1315,101 @@ jobs:
       - name: Use environment variable
         run: echo "Deploying to $DEPLOY_ENV"
 ```
+![image](https://github.com/user-attachments/assets/4e303533-06b5-440e-ac1d-2170efb46f9e)
 
+
+---
+
+### 👇 Line-by-Line Explanation
+
+#### ✅ Step 1: Define environment variable
+
+```yaml
+- name: Define environment variable
+  run: echo "DEPLOY_ENV=production" >> "$GITHUB_ENV"
+```
+
+* **Purpose**: This sets a custom environment variable (`DEPLOY_ENV`) for later steps in the same job.
+* **How**: It appends `DEPLOY_ENV=production` to the special file `$GITHUB_ENV`.
+* **What is `$GITHUB_ENV`?**
+  It's a GitHub Actions-specific environment file. Any key-value pair written into it becomes available to **all subsequent steps** as an environment variable.
+
+---
+
+#### ✅ Step 2: Use the environment variable
+
+```yaml
+- name: Use environment variable
+  run: echo "Deploying to $DEPLOY_ENV"
+```
+
+* **Purpose**: This uses the environment variable that was defined in the previous step.
+* **Output**: It will print:
+
+  ```
+  Deploying to production
+  ```
+
+---
+
+### ✅ Summary
+
+* `>> "$GITHUB_ENV"` → Safely persists env vars across steps.
+* `$DEPLOY_ENV` → Accessible in all **later** steps once defined.
+* Order **matters**: The variable must be defined before it's used.
+  
+
+---
+
+If you **don’t use** `>> "$GITHUB_ENV"` to define the variable, here’s what happens:
+
+---
+
+### ❌ Without `$GITHUB_ENV`
+
+```yaml
+- name: Define environment variable
+  run: |
+    export DEPLOY_ENV=production
+
+- name: Use environment variable
+  run: echo "Deploying to $DEPLOY_ENV"
+```
+
+### 🚫 Problem
+
+* This **won’t work** as expected.
+* **Why?**
+  Each `run` step in GitHub Actions executes in its **own shell session**.
+  So `export DEPLOY_ENV=production` only applies **within that step** — it **does not persist** to the next step.
+
+---
+
+### ✅ Why `>> "$GITHUB_ENV"` is needed
+
+```bash
+echo "DEPLOY_ENV=production" >> "$GITHUB_ENV"
+```
+
+* This **writes the variable** to a file that GitHub Actions **reads automatically between steps**.
+* It’s the **official way** to persist environment variables **across steps** in the same job.
+
+---
+
+### 🔄 Correct vs Incorrect
+
+| Step Definition                   | Persisted Across Steps? | Works in Next Step? |
+| --------------------------------- | ----------------------- | ------------------- |
+| `export VAR=value` in `run`       | ❌ No                    | ❌ No                |
+| `echo "VAR=value" >> $GITHUB_ENV` | ✅ Yes                   | ✅ Yes               |
+
+---
+
+Let me know if you'd like to compare this with job-level or workflow-level environment variables too!
+
+
+
+---
 🌍 **Use case**: Define and use variables like environment (`dev`, `staging`, `prod`) across multiple steps.
 
 ---
