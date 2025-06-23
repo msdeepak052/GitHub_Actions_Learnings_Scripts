@@ -30,6 +30,23 @@ GitHub Actions is a CI/CD (Continuous Integration/Continuous Deployment) platfor
 
 ---
 
+### **My First Workflow***
+```yaml
+name: First Workflow
+on: [push]
+
+jobs:
+  run-shell-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run shell command
+        run: echo "Hello, World!"
+      
+      - name: List files in current directory
+        run: ls -la
+```
+
+---
 ### **2. Basic Workflow Example**
 Create a file at `.github/workflows/main.yml`:
 ```yaml
