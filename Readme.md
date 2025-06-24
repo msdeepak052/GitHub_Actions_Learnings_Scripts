@@ -1943,6 +1943,10 @@ jobs:
           import platform 
           print(platform.processor())
 ```
+![image](https://github.com/user-attachments/assets/faabd3d2-07fd-4ec9-88f2-6a42766d6f51)
+
+![image](https://github.com/user-attachments/assets/1c402124-a62c-4e84-a87a-78ba518dbaf2)
+
 
 ---
 
