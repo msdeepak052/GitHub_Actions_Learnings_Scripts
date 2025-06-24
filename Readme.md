@@ -2293,11 +2293,11 @@ You can **publish** this to the GitHub Marketplace too!
 
 ---
 
-📌 Let me know if you want:
+#### Links to Action Marketplace
 
-* A breakdown of **composite actions** in full detail
-* How to **create your own action and publish it**
-* The next topic from our queue (e.g. `env`, `secrets`, `matrix`, `jobs`, etc.)
+[Actions Marketplace](https://github.com/marketplace?type=actions)
+
+---
 
 
 
