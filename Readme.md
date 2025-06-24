@@ -1988,22 +1988,31 @@ You're setting up a CI/CD pipeline for:
 ```yaml
 name: Checkout Example
 
-on: [push]
+on: [workflow_dispatch]
 
 jobs:
   checkout-job:
     runs-on: ubuntu-latest
 
     steps:
+      - name: List Files Before
+        run: ls -lahrt
+      
       - name: ✅ Checkout Code
         uses: actions/checkout@v4
 
-      - name: 📂 List Files in Repo
-        run: ls -la
+      - name: 📂 List Files in Repo After
+        run: ls -lahrt
+
 ```
 
 ⏱ After `checkout`, your repo is downloaded to the **default working directory**:
 `/home/runner/work/<repo-name>/<repo-name>`
+
+![image](https://github.com/user-attachments/assets/2e034a89-f5ac-474b-a23b-7d01ce67d7f4)
+
+![image](https://github.com/user-attachments/assets/1544d211-68e5-48de-a84c-ff234f7dce88)
+
 
 ---
 
