@@ -1613,4 +1613,343 @@ Replace hardcoded tokens like `my-deploy-token-abc123` with GitHub secrets:
 
 ---
 
+Great start! Let’s break down **“Shell and Working Directories in GitHub Actions”** in your notes style.
+
+---
+
+### 🔧 Topic: **Shell and Working Directories in GitHub Actions**
+
+---
+
+### 1️⃣ **What is it?**
+
+GitHub Actions uses **shells** to run commands inside the `run:` step. The **default shell** depends on the OS runner:
+
+| Runner OS        | Default Shell |
+| ---------------- | ------------- |
+| `ubuntu-latest`  | `bash`        |
+| `windows-latest` | `powershell`  |
+| `macos-latest`   | `bash`        |
+
+You can override this to use `bash`, `sh`, `pwsh`, `cmd`, or even custom shells.
+
+A **working directory** is the folder from which your shell commands run. By default, it’s the root of your repository, but you can change it per step or job.
+
+---
+
+### 2️⃣ **Why is it needed?**
+
+* To **run scripts** using a specific shell (like `bash` or `pwsh`).
+* To **organize commands** to run from a specific folder (e.g., inside `/backend`, `/frontend`).
+* Helps prevent file not found errors due to incorrect paths.
+
+---
+
+### 3️⃣ **Real-Life Scenario**
+
+> You're building a monorepo with separate folders: `/api`, `/frontend`, `/infrastructure`. You only want to run build scripts inside `api` using `bash`.
+
+---
+
+### 4️⃣ **YAML Example – Using shell & working-directory**
+
+```yaml
+name: Shell and Working Directory Example
+
+on: [push]
+
+jobs:
+  run-scripts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Bash command from root
+        run: echo "Hello from root using bash"
+        shell: bash
+
+      - name: Run command inside /api folder
+        run: npm install && npm run build
+        working-directory: ./api
+        shell: bash
+
+      - name: Run PowerShell on Windows
+        if: runner.os == 'Windows'
+        run: Write-Host "This is PowerShell"
+        shell: pwsh
+```
+
+---
+
+### 5️⃣ **Pro Tips**
+
+* You can **globally override** the shell at the job level (but not working-directory):
+
+  ```yaml
+  jobs:
+    job1:
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          shell: bash
+  ```
+
+* For multi-folder repos, use `working-directory:` to avoid `cd` commands.
+
+* Avoid Windows-only shells (like `cmd`) unless you **target `windows-latest`** runner.
+
+---
+
+Perfect, Deepak! Here's how we'll proceed:
+
+---
+
+### ✅ Working Style Agreed
+
+* For each topic, I’ll give:
+
+  * **📘 Concept Explanation**
+  * **💡 Real-life Use Cases**
+  * **📂 Multiple YAML Examples** (basic → intermediate)
+  * **⚠️ Common Mistakes**
+  * **🛠 Pro Tips**
+
+---
+
+### 🗂 Topics Log (We'll build this together)
+
+| ✅  | Topic                                             | Status      |
+| -- | ------------------------------------------------- | ----------- |
+| ✔️ | Shell & Working Directory                         | In Progress |
+| ⏳  | `env` and `secrets`                               | Pending     |
+| ⏳  | `jobs` and `steps` structure                      | Pending     |
+| ⏳  | `matrix` builds                                   | Pending     |
+| ⏳  | `if` conditions & expressions                     | Pending     |
+| ⏳  | Artifacts                                         | Pending     |
+| ⏳  | Caching                                           | Pending     |
+| ⏳  | Reusable & Composite Actions                      | Pending     |
+| ⏳  | GitHub Contexts (`github`, `env`, `runner`, etc.) | Pending     |
+| ⏳  | Deployments (e.g., to S3, EC2, Azure, etc.)       | Pending     |
+
+You can add to this list anytime.
+
+---
+
+Now let’s give **Shell and Working Directories** a **more in-depth** treatment as promised:
+
+---
+
+## 🔧 Topic: Shell and Working Directories in GitHub Actions
+
+---
+
+### 📘 1. What is a Shell?
+
+A **shell** is the command-line interpreter that GitHub Actions uses to run your commands. Each operating system runner has a default shell:
+
+| OS      | Default Shell            |
+| ------- | ------------------------ |
+| Ubuntu  | `bash`                   |
+| Windows | `pwsh` (PowerShell Core) |
+| macOS   | `bash`                   |
+
+You can override it with:
+
+* `bash`
+* `sh`
+* `pwsh` (PowerShell Core)
+* `cmd` (Windows Command Prompt)
+* `python` (advanced, but possible for scripts)
+
+---
+
+### 📘 2. What is `working-directory`?
+
+* The `working-directory` key specifies the folder to **run the command from**.
+* By default, it is the **root of your GitHub repository** (`$GITHUB_WORKSPACE`).
+* Helps when you're working in **monorepos**, microservices, or specific folders.
+
+---
+
+### 💡 3. Real-World Use Cases
+
+1. **Monorepo Build Pipelines**
+
+   * Run `npm install` only in `frontend/` or `api/`.
+
+2. **Infrastructure as Code**
+
+   * Run `terraform plan` in `infra/aws/`.
+
+3. **Cross-platform Shell Logic**
+
+   * Run `.bat` script in Windows, `.sh` in Ubuntu.
+
+4. **CI/CD Pipelines with Mixed Tech**
+
+   * Python in `/data`, Java in `/backend`, Bash in root.
+
+---
+
+### 🧪 4. Basic to Advanced Examples
+
+#### 🟢 **Basic Example – Bash in Ubuntu**
+
+```yaml
+name: Bash Hello World
+
+on: [push]
+
+jobs:
+  bash-example:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print with Bash
+        run: echo "This is Bash"
+        shell: bash
+```
+
+---
+
+#### 🟡 **Intermediate – Run from Subdirectory**
+
+```yaml
+name: Subdirectory Build
+
+on: [push]
+
+jobs:
+  node-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install & Build from /frontend
+        run: |
+          npm install
+          npm run build
+        working-directory: frontend
+```
+
+---
+
+#### 🔵 **Cross-platform Shells**
+
+```yaml
+name: OS-specific Shells
+
+on: [push]
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - name: Run PowerShell
+        run: Write-Host "Windows Hello"
+        shell: pwsh
+
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Shell
+        run: echo "Linux Hello"
+        shell: bash
+```
+
+---
+
+#### 🔴 **Global Shell for All Steps**
+
+```yaml
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - run: echo "This and all steps use bash"
+```
+
+---
+
+### ⚠️ 5. Common Pitfalls
+
+* ❌ Running PowerShell on Ubuntu runner:
+
+  ```yaml
+  shell: pwsh  # only works if pwsh is installed on that runner
+  ```
+* ❌ `working-directory` path doesn't exist → job fails.
+* ❌ Forgetting to use `./` or full path in `working-directory`.
+
+---
+
+### 🛠 6. Pro Tips
+
+* Use `defaults.run.shell` and `defaults.run.working-directory` to reduce duplication:
+
+  ```yaml
+  defaults:
+    run:
+      shell: bash
+      working-directory: backend
+  ```
+
+* Use `pwd` or `echo $PWD` to debug your working directory.
+
+* Use matrix builds to run same steps in different directories or with different shells.
+
+```yaml
+name: Working Dirs & Shells
+on: [push]
+defaults:
+  run:
+    shell: bash
+    # working-directory: /de/ed
+jobs:
+  display-wd-info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display Working Directory & List Files
+        run: |
+          pwd
+          ls -a
+          echo $GITHUB_SHA
+          echo $GITHUB_REPOSITORY
+          echo $GITHUB_WORKSPACE
+      - name: Change Working Dir
+        working-directory: /home/runner
+        run: pwd
+  display-wd-info-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Display Working Directory & List Files
+        run: |
+          Get-Location
+          dir
+          echo $env:GITHUB_SHA
+          echo $env:GITHUB_REPOSITORY
+          echo $env:GITHUB_WORKSPACE
+      - name: Python Shell
+        shell: python
+        run: |
+          import platform 
+          print(platform.processor())
+```
+
+---
+
+✅ That’s your **detailed notebook entry** on **Shell & Working Directory** in GitHub Actions.
+
+---
+
+
+
 
