@@ -2002,7 +2002,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 📂 List Files in Repo After
-        run: ls -lahrt
+        run: |
+          ls -lahrt
+          pwd
 
 ```
 
@@ -2012,6 +2014,8 @@ jobs:
 ![image](https://github.com/user-attachments/assets/2e034a89-f5ac-474b-a23b-7d01ce67d7f4)
 
 ![image](https://github.com/user-attachments/assets/1544d211-68e5-48de-a84c-ff234f7dce88)
+
+![image](https://github.com/user-attachments/assets/71d4cd0a-8cbd-49aa-aadd-6dd2cf1a75d0)
 
 
 ---
@@ -2096,6 +2100,206 @@ The checkout action:
 | Need full git history    | `with: fetch-depth: 0`         |
 
 ---
+
+---
+
+Excellent, Deepak! Let’s now look at one of the **core building blocks** of GitHub Actions:
+
+---
+
+## 🔧 Topic: **Introduction to Actions (in GitHub Actions)**
+
+---
+
+### 📘 1. What Is an “Action”?
+
+An **Action** in GitHub Actions is a **reusable unit of code** used to perform a specific task in your CI/CD pipeline.
+
+You can think of an **Action** like a **function** or **plugin** that can be:
+
+* Created by **GitHub**
+* Developed by the **community**
+* Written by **your team**
+
+They can be used to:
+
+* Checkout code (`actions/checkout`)
+* Setup a programming language environment
+* Lint or test code
+* Build and push Docker images
+* Deploy to cloud
+
+---
+
+### 🧱 2. Types of Actions
+
+| Type                  | Description                                              |
+| --------------------- | -------------------------------------------------------- |
+| **JavaScript Action** | Runs using Node.js, fastest, works cross-platform        |
+| **Docker Action**     | Runs inside a container, great for isolated environments |
+| **Composite Action**  | Combines multiple steps in YAML, no scripting needed     |
+
+---
+
+### 💡 3. Real-Life Use Cases
+
+| Scenario                     | Action Example                             |
+| ---------------------------- | ------------------------------------------ |
+| Checkout repo                | `actions/checkout@v4`                      |
+| Setup Node.js environment    | `actions/setup-node@v4`                    |
+| Run Terraform fmt & validate | `hashicorp/setup-terraform@v3`             |
+| Upload artifacts to GitHub   | `actions/upload-artifact@v4`               |
+| Deploy to AWS                | `aws-actions/configure-aws-credentials@v3` |
+
+---
+
+### 🔨 4. Basic Example – Using a Prebuilt Action
+
+```yaml
+name: Run Node Lint
+
+on: [push]
+
+jobs:
+  node-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4  # ✅ Checkout source code
+
+      - uses: actions/setup-node@v4  # ✅ Setup Node.js
+        with:
+          node-version: '20'
+
+      - run: npm install
+      - run: npm run lint
+```
+
+---
+
+### 📦 5. Using Docker-Based Action
+
+You can use Docker-based actions like this:
+
+```yaml
+- uses: addnab/docker-run-action@v3
+  with:
+    image: alpine
+    run: |
+      echo "Running inside Alpine!"
+```
+
+This action spins up a container and runs the `run:` block inside it.
+
+---
+
+### 🔗 6. Using Actions from a Different Repo
+
+```yaml
+- uses: octocat/hello-world-action@v1
+```
+
+📌 The format is:
+
+```
+<owner>/<repo>@<tag/branch>
+```
+
+---
+
+### 🧱 7. Composite Actions (Reusable Multi-Step Actions)
+
+Used when you want to create your own action with multiple internal steps.
+
+📁 File structure:
+
+```
+.github/
+  actions/
+    my-lint-action/
+      action.yml
+```
+
+📄 `action.yml`
+
+```yaml
+name: Lint Code
+description: Run ESLint and Prettier
+
+runs:
+  using: "composite"
+  steps:
+    - run: npm install
+    - run: npm run lint
+```
+
+✅ Then use it like:
+
+```yaml
+- uses: ./.github/actions/my-lint-action
+```
+
+---
+
+### 🧠 8. Custom JavaScript Action
+
+Here’s a **basic JavaScript action**:
+
+📁 `action.yml`
+
+```yaml
+name: Say Hello
+runs:
+  using: "node16"
+  main: "index.js"
+```
+
+📄 `index.js`
+
+```js
+console.log("Hello from custom JavaScript action!");
+```
+
+You can **publish** this to the GitHub Marketplace too!
+
+---
+
+### ⚠️ 9. Common Pitfalls
+
+| Mistake                               | Issue                                      |
+| ------------------------------------- | ------------------------------------------ |
+| Forgetting `@vX` tag                  | Always use versioned actions, not branches |
+| Using relative paths wrongly          | Composite actions must be inside the repo  |
+| Misusing Docker image in wrong runner | Docker actions need Linux runners          |
+
+---
+
+### 🛠 10. Pro Tips
+
+* 🔖 Always pin to **major version** like `@v4` (not `@main`) for stability.
+* 🧪 Test your custom actions locally using `act` tool.
+* 🔄 Reuse logic across repos by **publishing your own action** to the marketplace.
+
+---
+
+### ✅ Summary
+
+| What                    | Example                           |
+| ----------------------- | --------------------------------- |
+| Use official action     | `actions/checkout@v4`             |
+| Use community action    | `docker/login-action@v2`          |
+| Create composite action | YAML with multiple steps          |
+| Create JS/Docker action | Custom logic with reusable config |
+
+---
+
+📌 Let me know if you want:
+
+* A breakdown of **composite actions** in full detail
+* How to **create your own action and publish it**
+* The next topic from our queue (e.g. `env`, `secrets`, `matrix`, `jobs`, etc.)
+
+
 
 
 
