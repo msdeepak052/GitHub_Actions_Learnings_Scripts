@@ -1,11 +1,15 @@
 # .github/workflows/build-on-push.yml
 name: Build and Test on Push
 
+# on:
+#   push:
+#     branches:
+#       - main      # Trigger when code is pushed to main branch
+#     #   - feature/* # Trigger when code is pushed to any branch starting with "feature/"
+
 on:
-  push:
-    branches:
-      - main      # Trigger when code is pushed to main branch
-    #   - feature/* # Trigger when code is pushed to any branch starting with "feature/"
+  workflow_dispatch:  # Allows manual trigger
+
 
 jobs:
   build:
