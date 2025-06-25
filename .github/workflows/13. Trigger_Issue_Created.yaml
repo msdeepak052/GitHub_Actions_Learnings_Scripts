@@ -1,0 +1,17 @@
+# .github/workflows/issue-comment.yml
+name: Respond to Issue Comments
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  respond:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if comment contains "/deploy"
+        if: contains(github.event.comment.body, '/deploy')
+        run: |
+          echo "Deployment requested by @${{ github.event.comment.user.login }}"
+          # Simulate deployment
+          echo "Deployment started!"
