@@ -13,5 +13,5 @@ jobs:
         if: contains(github.event.comment.body, '/deploy')
         run: |
           echo "Deployment requested by @${{ github.event.comment.user.login }}"
-          # Simulate deployment
+          # Simulate deployments
           echo "Deployment started!"
