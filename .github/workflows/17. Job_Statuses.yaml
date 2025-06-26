@@ -1,0 +1,24 @@
+name: Dependent Jobs
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      build_id: ${{ steps.set-output.outputs.build_id }}
+    steps:
+      - id: set-output
+        run: echo "build_id=$(date +%s)" >> $GITHUB_OUTPUT
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Using build ID ${{ needs.build.outputs.build_id }}"
+
+  deploy:
+    needs: [build, test]
+    if: ${{ needs.build.result == 'success' && needs.test.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying build ${{ needs.build.outputs.build_id }}"
