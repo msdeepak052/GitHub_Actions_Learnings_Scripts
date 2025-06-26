@@ -28,7 +28,7 @@ jobs:
         if: github.event_name == 'pull_request'
         run: echo "Triggered by a pull request"
       
-      - name: On Schedule
+      - name: On Workflow Dispatch Event
         if: github.event_name == 'workflow_dispatch'
         run: echo "Triggered by the workflow_dispatch event"
       
