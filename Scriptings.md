@@ -1,7 +1,7 @@
 To create a CI/CD pipeline that meets the following requirements:
 
-1. **CI Pipeline** that includes security measures with SonarQube, Nexus, OWASP, Trivy, Docker build & push to ECR and DockerHub.
-2. **CD Pipeline** that is triggered after a successful CI pipeline, deploying with ArgoCD to a Kubernetes (K8s) cluster, installing Prometheus and Grafana using Helm, and sending an email notification once deployment is successful.
+1. **CI Pipelines** that includes security measures with SonarQube, Nexus, OWASP, Trivy, Docker build & push to ECR and DockerHub.
+2. **CD Pipelines** that is triggered after a successful CI pipeline, deploying with ArgoCD to a Kubernetes (K8s) cluster, installing Prometheus and Grafana using Helm, and sending an email notification once deployment is successful.
 
 Here's how to structure your GitHub Actions workflows for both **CI** and **CD** pipelines:
 
