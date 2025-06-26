@@ -2,9 +2,6 @@
 
 Here's a comprehensive explanation of environment variables in GitHub Actions with real-world examples, based on the [official documentation](https://docs.github.com/en/actions/how-tos/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables).
 
-## Default Environment Variables
-
-GitHub provides these automatically in every workflow run:
 
 ### Common Default Variables
 
@@ -22,6 +19,167 @@ You can define your own variables at three levels:
 1. **Workflow-level**: For entire workflow
 2. **Job-level**: For specific job
 3. **Step-level**: For specific step
+.
+
+---
+
+## 🔹 What are Environment Variables in GitHub Actions?
+
+Environment variables let you **store and use information** throughout your workflows — like credentials, file paths, flags, or metadata.
+
+---
+
+## ✅ 1. **Default Environment Variables**
+
+These are automatically provided by GitHub and **don’t require any setup**.
+
+📌 Some important ones:
+
+| Variable            | Description                                       |
+| ------------------- | ------------------------------------------------- |
+| `GITHUB_REPOSITORY` | `owner/repo-name`                                 |
+| `GITHUB_REF`        | Git ref (branch/tag) that triggered the workflow  |
+| `GITHUB_SHA`        | Commit SHA                                        |
+| `GITHUB_ACTOR`      | The user who triggered the workflow               |
+| `GITHUB_WORKSPACE`  | The directory where the repo is checked out       |
+| `GITHUB_EVENT_NAME` | The name of the event that triggered the workflow |
+| `GITHUB_RUN_NUMBER` | Unique run number                                 |
+| `GITHUB_JOB`        | Job ID                                            |
+
+📘 Reference: [GitHub Docs – Default Env Vars](https://docs.github.com/en/actions/how-tos/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables)
+
+---
+
+### 🎯 Real-Life Example: CI Pipeline with Logging and Artifact Info
+
+```yaml
+name: Build Docker Image
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show GitHub context
+        run: |
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Branch/Tag: $GITHUB_REF"
+          echo "Commit SHA: $GITHUB_SHA"
+          echo "Triggered by: $GITHUB_ACTOR"
+          echo "Run number: $GITHUB_RUN_NUMBER"
+          echo "Workspace path: $GITHUB_WORKSPACE"
+
+      - name: Build Docker image
+        run: |
+          docker build -t myapp:${GITHUB_SHA} .
+```
+
+🔍 Use Case:
+
+* CI builds tag Docker images with commit SHA.
+* Helpful for traceability in your CI/CD lifecycle.
+
+---
+
+## 🛠️ 2. **Custom Environment Variables**
+
+You can define your own variables:
+
+* **At job level**
+* **At step level**
+* Or using `env` key globally
+
+---
+
+### 🎯 Real-Life Example: Slack Notification, Docker Tagging, Terraform
+
+```yaml
+name: Deploy Infrastructure
+
+on:
+  workflow_dispatch:
+
+env:
+  ENVIRONMENT: "prod"
+  REGION: "ap-south-1"
+  SLACK_CHANNEL: "#deployments"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      TF_BACKEND_BUCKET: "terraform-${{ github.repository }}"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show deployment context
+        run: |
+          echo "Deploying to $ENVIRONMENT environment in $REGION"
+          echo "Using backend bucket: $TF_BACKEND_BUCKET"
+
+      - name: Run Terraform init
+        run: |
+          terraform init \
+            -backend-config="bucket=$TF_BACKEND_BUCKET"
+
+      - name: Run Terraform apply
+        run: terraform apply -auto-approve
+
+      - name: Notify Slack
+        run: ./scripts/slack-notify.sh "$SLACK_CHANNEL" "Deployment to $ENVIRONMENT complete."
+```
+
+### ✅ Breakdown:
+
+| Variable                                 | Scope        | Purpose                               |
+| ---------------------------------------- | ------------ | ------------------------------------- |
+| `ENVIRONMENT`, `REGION`, `SLACK_CHANNEL` | Global `env` | Shared across all jobs                |
+| `TF_BACKEND_BUCKET`                      | Job-level    | Terraform backend bucket per repo     |
+| `$GITHUB_REPOSITORY`                     | Default      | Used to construct dynamic bucket name |
+
+---
+
+## 🔁 Use Both Together
+
+```yaml
+env:
+  CUSTOM_TAG: "v1.0.${{ github.run_number }}"
+```
+
+Then use it in:
+
+```bash
+docker build -t myapp:$CUSTOM_TAG .
+```
+
+---
+
+## 📝 Summary
+
+| Type                 | Defined by | Use Case                               |
+| -------------------- | ---------- | -------------------------------------- |
+| **Default Env Vars** | GitHub     | Metadata like commit, actor, repo      |
+| **Custom Env Vars**  | You        | Configuration like region, bucket, tag |
+
+---
+
+## 📚 Reference
+
+🔗 [GitHub Docs – Environment Variables](https://docs.github.com/en/actions/how-tos/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables)
+
+---
+
+
 
 ## Real-World Examples
 
