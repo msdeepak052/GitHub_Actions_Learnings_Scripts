@@ -1,0 +1,29 @@
+name: Manual Trigger Example
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deploy environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+      force_deploy:
+        description: 'Force deploy (skip checks)?'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print inputs
+        run: |
+          echo "Deploying to ${{ github.event.inputs.environment }}"
+          echo "Force deploy? ${{ github.event.inputs.force_deploy }}"
+      - name: Run deployment steps
+        run: echo "Deploying to ${{ github.event.inputs.environment }}..."
