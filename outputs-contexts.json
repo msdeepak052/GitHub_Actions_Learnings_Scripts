@@ -1,0 +1,434 @@
+2025-06-26T07:51:14.5083964Z Current runner version: '2.325.0'
+2025-06-26T07:51:14.5108449Z ##[group]Runner Image Provisioner
+2025-06-26T07:51:14.5109271Z Hosted Compute Agent
+2025-06-26T07:51:14.5109863Z Version: 20250620.352
+2025-06-26T07:51:14.5110437Z Commit: f262f3aba23b10ea191b2a62bdee1ca4c3d344da
+2025-06-26T07:51:14.5111117Z Build Date: 2025-06-20T19:27:17Z
+2025-06-26T07:51:14.5111650Z ##[endgroup]
+2025-06-26T07:51:14.5112270Z ##[group]Operating System
+2025-06-26T07:51:14.5112828Z Ubuntu
+2025-06-26T07:51:14.5113289Z 24.04.2
+2025-06-26T07:51:14.5113766Z LTS
+2025-06-26T07:51:14.5114213Z ##[endgroup]
+2025-06-26T07:51:14.5114657Z ##[group]Runner Image
+2025-06-26T07:51:14.5115260Z Image: ubuntu-24.04
+2025-06-26T07:51:14.5115797Z Version: 20250622.1.0
+2025-06-26T07:51:14.5116749Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250622.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-06-26T07:51:14.5118472Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250622.1
+2025-06-26T07:51:14.5119434Z ##[endgroup]
+2025-06-26T07:51:14.5120563Z ##[group]GITHUB_TOKEN Permissions
+2025-06-26T07:51:14.5122633Z Contents: read
+2025-06-26T07:51:14.5123200Z Metadata: read
+2025-06-26T07:51:14.5123712Z Packages: read
+2025-06-26T07:51:14.5124162Z ##[endgroup]
+2025-06-26T07:51:14.5126634Z Secret source: Actions
+2025-06-26T07:51:14.5127681Z Prepare workflow directory
+2025-06-26T07:51:14.5452691Z Prepare all required actions
+2025-06-26T07:51:14.5548853Z Complete job name: using-expressions-and-contexts
+2025-06-26T07:51:14.6297259Z ##[group]Run echo 1
+2025-06-26T07:51:14.6298046Z [36;1mecho 1[0m
+2025-06-26T07:51:14.6298503Z [36;1mecho This is a string[0m
+2025-06-26T07:51:14.6299157Z [36;1mecho [0m
+2025-06-26T07:51:14.6299588Z [36;1mecho true[0m
+2025-06-26T07:51:14.6300090Z [36;1mecho false[0m
+2025-06-26T07:51:14.6300794Z [36;1mecho true[0m
+2025-06-26T07:51:14.6301243Z [36;1mecho false[0m
+2025-06-26T07:51:14.6301703Z [36;1mecho true[0m
+2025-06-26T07:51:14.6884921Z shell: /usr/bin/bash -e {0}
+2025-06-26T07:51:14.6886466Z ##[endgroup]
+2025-06-26T07:51:14.7186611Z 1
+2025-06-26T07:51:14.7188476Z This is a string
+2025-06-26T07:51:14.7189110Z 
+2025-06-26T07:51:14.7189440Z true
+2025-06-26T07:51:14.7190265Z false
+2025-06-26T07:51:14.7191010Z true
+2025-06-26T07:51:14.7191739Z false
+2025-06-26T07:51:14.7192491Z true
+2025-06-26T07:51:14.7382288Z ##[group]Run echo '{
+2025-06-26T07:51:14.7383708Z [36;1mecho '{[0m
+2025-06-26T07:51:14.7384501Z [36;1m  "token": "***",[0m
+2025-06-26T07:51:14.7385126Z [36;1m  "job": "using-expressions-and-contexts",[0m
+2025-06-26T07:51:14.7385847Z [36;1m  "ref": "refs/heads/main",[0m
+2025-06-26T07:51:14.7386493Z [36;1m  "sha": "281a74085f8b10a19c6a5b332893d3543a5dd070",[0m
+2025-06-26T07:51:14.7387307Z [36;1m  "repository": "msdeepak052/GitHub_Actions_Learnings_Scripts",[0m
+2025-06-26T07:51:14.7388446Z [36;1m  "repository_owner": "msdeepak052",[0m
+2025-06-26T07:51:14.7389054Z [36;1m  "repository_owner_id": "160315954",[0m
+2025-06-26T07:51:14.7390015Z [36;1m  "repositoryUrl": "git://github.com/msdeepak052/GitHub_Actions_Learnings_Scripts.git",[0m
+2025-06-26T07:51:14.7391018Z [36;1m  "run_id": "15896135909",[0m
+2025-06-26T07:51:14.7391543Z [36;1m  "run_number": "1",[0m
+2025-06-26T07:51:14.7392114Z [36;1m  "retention_days": "90",[0m
+2025-06-26T07:51:14.7392757Z [36;1m  "run_attempt": "1",[0m
+2025-06-26T07:51:14.7393349Z [36;1m  "artifact_cache_size_limit": "10",[0m
+2025-06-26T07:51:14.7394082Z [36;1m  "repository_visibility": "public",[0m
+2025-06-26T07:51:14.7394704Z [36;1m  "actor_id": "160315954",[0m
+2025-06-26T07:51:14.7395293Z [36;1m  "actor": "msdeepak052",[0m
+2025-06-26T07:51:14.7395957Z [36;1m  "workflow": "Expressions & Contexts",[0m
+2025-06-26T07:51:14.7396589Z [36;1m  "head_ref": "",[0m
+2025-06-26T07:51:14.7397082Z [36;1m  "base_ref": "",[0m
+2025-06-26T07:51:14.7397972Z [36;1m  "event_name": "workflow_dispatch",[0m
+2025-06-26T07:51:14.7398620Z [36;1m  "server_url": "https://github.com",[0m
+2025-06-26T07:51:14.7399284Z [36;1m  "api_url": "https://api.github.com",[0m
+2025-06-26T07:51:14.7400242Z [36;1m  "graphql_url": "https://api.github.com/graphql",[0m
+2025-06-26T07:51:14.7400980Z [36;1m  "ref_name": "main",[0m
+2025-06-26T07:51:14.7401528Z [36;1m  "ref_protected": false,[0m
+2025-06-26T07:51:14.7402134Z [36;1m  "ref_type": "branch",[0m
+2025-06-26T07:51:14.7402722Z [36;1m  "secret_source": "Actions",[0m
+2025-06-26T07:51:14.7403259Z [36;1m  "event": {[0m
+2025-06-26T07:51:14.7403792Z [36;1m    "inputs": null,[0m
+2025-06-26T07:51:14.7404316Z [36;1m    "ref": "refs/heads/main",[0m
+2025-06-26T07:51:14.7404898Z [36;1m    "repository": {[0m
+2025-06-26T07:51:14.7405502Z [36;1m      "allow_forking": true,[0m
+2025-06-26T07:51:14.7406510Z [36;1m      "archive_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/{archive_format}{/ref}",[0m
+2025-06-26T07:51:14.7407721Z [36;1m      "archived": false,[0m
+2025-06-26T07:51:14.7408844Z [36;1m      "assignees_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/assignees{/user}",[0m
+2025-06-26T07:51:14.7410325Z [36;1m      "blobs_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/git/blobs{/sha}",[0m
+2025-06-26T07:51:14.7411721Z [36;1m      "branches_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/branches{/branch}",[0m
+2025-06-26T07:51:14.7412954Z [36;1m      "clone_url": "https://github.com/msdeepak052/GitHub_Actions_Learnings_Scripts.git",[0m
+2025-06-26T07:51:14.7414394Z [36;1m      "collaborators_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/collaborators{/collaborator}",[0m
+2025-06-26T07:51:14.7415913Z [36;1m      "comments_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/comments{/number}",[0m
+2025-06-26T07:51:14.7417241Z [36;1m      "commits_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/commits{/sha}",[0m
+2025-06-26T07:51:14.7418969Z [36;1m      "compare_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/compare/{base}...{head}",[0m
+2025-06-26T07:51:14.7420412Z [36;1m      "contents_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/contents/{+path}",[0m
+2025-06-26T07:51:14.7422141Z [36;1m      "contributors_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/contributors",[0m
+2025-06-26T07:51:14.7423317Z [36;1m      "created_at": "2025-06-22T10:44:45Z",[0m
+2025-06-26T07:51:14.7423904Z [36;1m      "default_branch": "main",[0m
+2025-06-26T07:51:14.7425217Z [36;1m      "deployments_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/deployments",[0m
+2025-06-26T07:51:14.7488742Z [36;1m      "description": null,[0m
+2025-06-26T07:51:14.7489653Z [36;1m      "disabled": false,[0m
+2025-06-26T07:51:14.7491165Z [36;1m      "downloads_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/downloads",[0m
+2025-06-26T07:51:14.7493435Z [36;1m      "events_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/events",[0m
+2025-06-26T07:51:14.7494950Z [36;1m      "fork": false,[0m
+2025-06-26T07:51:14.7495688Z [36;1m      "forks": 0,[0m
+2025-06-26T07:51:14.7496468Z [36;1m      "forks_count": 0,[0m
+2025-06-26T07:51:14.7498274Z [36;1m      "forks_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/forks",[0m
+2025-06-26T07:51:14.7500124Z [36;1m      "full_name": "msdeepak052/GitHub_Actions_Learnings_Scripts",[0m
+2025-06-26T07:51:14.7502116Z [36;1m      "git_commits_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/git/commits{/sha}",[0m
+2025-06-26T07:51:14.7504605Z [36;1m      "git_refs_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/git/refs{/sha}",[0m
+2025-06-26T07:51:14.7506975Z [36;1m      "git_tags_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/git/tags{/sha}",[0m
+2025-06-26T07:51:14.7509746Z [36;1m      "git_url": "git://github.com/msdeepak052/GitHub_Actions_Learnings_Scripts.git",[0m
+2025-06-26T07:51:14.7511148Z [36;1m      "has_discussions": false,[0m
+2025-06-26T07:51:14.7512068Z [36;1m      "has_downloads": true,[0m
+2025-06-26T07:51:14.7512952Z [36;1m      "has_issues": true,[0m
+2025-06-26T07:51:14.7513922Z [36;1m      "has_pages": false,[0m
+2025-06-26T07:51:14.7514774Z [36;1m      "has_projects": true,[0m
+2025-06-26T07:51:14.7515649Z [36;1m      "has_wiki": true,[0m
+2025-06-26T07:51:14.7516434Z [36;1m      "homepage": null,[0m
+2025-06-26T07:51:14.7518031Z [36;1m      "hooks_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/hooks",[0m
+2025-06-26T07:51:14.7519962Z [36;1m      "html_url": "https://github.com/msdeepak052/GitHub_Actions_Learnings_Scripts",[0m
+2025-06-26T07:51:14.7521274Z [36;1m      "id": 1006468321,[0m
+2025-06-26T07:51:14.7522078Z [36;1m      "is_template": false,[0m
+2025-06-26T07:51:14.7523833Z [36;1m      "issue_comment_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/issues/comments{/number}",[0m
+2025-06-26T07:51:14.7526529Z [36;1m      "issue_events_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/issues/events{/number}",[0m
+2025-06-26T07:51:14.7529326Z [36;1m      "issues_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/issues{/number}",[0m
+2025-06-26T07:51:14.7531567Z [36;1m      "keys_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/keys{/key_id}",[0m
+2025-06-26T07:51:14.7532850Z [36;1m      "labels_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/labels{/name}",[0m
+2025-06-26T07:51:14.7533717Z [36;1m      "language": null,[0m
+2025-06-26T07:51:14.7534598Z [36;1m      "languages_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/languages",[0m
+2025-06-26T07:51:14.7535458Z [36;1m      "license": null,[0m
+2025-06-26T07:51:14.7536239Z [36;1m      "merges_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/merges",[0m
+2025-06-26T07:51:14.7537930Z [36;1m      "milestones_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/milestones{/number}",[0m
+2025-06-26T07:51:14.7538905Z [36;1m      "mirror_url": null,[0m
+2025-06-26T07:51:14.7539430Z [36;1m      "name": "GitHub_Actions_Learnings_Scripts",[0m
+2025-06-26T07:51:14.7539980Z [36;1m      "node_id": "R_kgDOO_184Q",[0m
+2025-06-26T07:51:14.7541091Z [36;1m      "notifications_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/notifications{?since,all,participating}",[0m
+2025-06-26T07:51:14.7542184Z [36;1m      "open_issues": 1,[0m
+2025-06-26T07:51:14.7542647Z [36;1m      "open_issues_count": 1,[0m
+2025-06-26T07:51:14.7543116Z [36;1m      "owner": {[0m
+2025-06-26T07:51:14.7543725Z [36;1m        "avatar_url": "https://avatars.githubusercontent.com/u/160315954?v=4",[0m
+2025-06-26T07:51:14.7544635Z [36;1m        "events_url": "https://api.github.com/users/msdeepak052/events{/privacy}",[0m
+2025-06-26T07:51:14.7545500Z [36;1m        "followers_url": "https://api.github.com/users/msdeepak052/followers",[0m
+2025-06-26T07:51:14.7546443Z [36;1m        "following_url": "https://api.github.com/users/msdeepak052/following{/other_user}",[0m
+2025-06-26T07:51:14.7547380Z [36;1m        "gists_url": "https://api.github.com/users/msdeepak052/gists{/gist_id}",[0m
+2025-06-26T07:51:14.7548515Z [36;1m        "gravatar_id": "",[0m
+2025-06-26T07:51:14.7549073Z [36;1m        "html_url": "https://github.com/msdeepak052",[0m
+2025-06-26T07:51:14.7549617Z [36;1m        "id": 160315954,[0m
+2025-06-26T07:51:14.7550071Z [36;1m        "login": "msdeepak052",[0m
+2025-06-26T07:51:14.7550569Z [36;1m        "node_id": "U_kgDOCY46Mg",[0m
+2025-06-26T07:51:14.7551237Z [36;1m        "organizations_url": "https://api.github.com/users/msdeepak052/orgs",[0m
+2025-06-26T07:51:14.7552297Z [36;1m        "received_events_url": "https://api.github.com/users/msdeepak052/received_events",[0m
+2025-06-26T07:51:14.7553163Z [36;1m        "repos_url": "https://api.github.com/users/msdeepak052/repos",[0m
+2025-06-26T07:51:14.7553794Z [36;1m        "site_admin": false,[0m
+2025-06-26T07:51:14.7554496Z [36;1m        "starred_url": "https://api.github.com/users/msdeepak052/starred{/owner}{/repo}",[0m
+2025-06-26T07:51:14.7555445Z [36;1m        "subscriptions_url": "https://api.github.com/users/msdeepak052/subscriptions",[0m
+2025-06-26T07:51:14.7556157Z [36;1m        "type": "User",[0m
+2025-06-26T07:51:14.7556708Z [36;1m        "url": "https://api.github.com/users/msdeepak052",[0m
+2025-06-26T07:51:14.7557289Z [36;1m        "user_view_type": "public"[0m
+2025-06-26T07:51:14.7558326Z [36;1m      },[0m
+2025-06-26T07:51:14.7558712Z [36;1m      "private": false,[0m
+2025-06-26T07:51:14.7559557Z [36;1m      "pulls_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/pulls{/number}",[0m
+2025-06-26T07:51:14.7560469Z [36;1m      "pushed_at": "2025-06-26T07:50:41Z",[0m
+2025-06-26T07:51:14.7561386Z [36;1m      "releases_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/releases{/id}",[0m
+2025-06-26T07:51:14.7562257Z [36;1m      "size": 259,[0m
+2025-06-26T07:51:14.7562896Z [36;1m      "ssh_url": "git@github.com:msdeepak052/GitHub_Actions_Learnings_Scripts.git",[0m
+2025-06-26T07:51:14.7563591Z [36;1m      "stargazers_count": 0,[0m
+2025-06-26T07:51:14.7564448Z [36;1m      "stargazers_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/stargazers",[0m
+2025-06-26T07:51:14.7565705Z [36;1m      "statuses_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/statuses/{sha}",[0m
+2025-06-26T07:51:14.7566978Z [36;1m      "subscribers_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/subscribers",[0m
+2025-06-26T07:51:14.7568439Z [36;1m      "subscription_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/subscription",[0m
+2025-06-26T07:51:14.7569560Z [36;1m      "svn_url": "https://github.com/msdeepak052/GitHub_Actions_Learnings_Scripts",[0m
+2025-06-26T07:51:14.7570703Z [36;1m      "tags_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/tags",[0m
+2025-06-26T07:51:14.7571816Z [36;1m      "teams_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/teams",[0m
+2025-06-26T07:51:14.7572607Z [36;1m      "topics": [],[0m
+2025-06-26T07:51:14.7573410Z [36;1m      "trees_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/git/trees{/sha}",[0m
+2025-06-26T07:51:14.7574293Z [36;1m      "updated_at": "2025-06-26T07:50:45Z",[0m
+2025-06-26T07:51:14.7575045Z [36;1m      "url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts",[0m
+2025-06-26T07:51:14.7575812Z [36;1m      "visibility": "public",[0m
+2025-06-26T07:51:14.7576307Z [36;1m      "watchers": 0,[0m
+2025-06-26T07:51:14.7576751Z [36;1m      "watchers_count": 0,[0m
+2025-06-26T07:51:14.7577247Z [36;1m      "web_commit_signoff_required": false[0m
+2025-06-26T07:51:14.7577994Z [36;1m    },[0m
+2025-06-26T07:51:14.7578357Z [36;1m    "sender": {[0m
+2025-06-26T07:51:14.7578974Z [36;1m      "avatar_url": "https://avatars.githubusercontent.com/u/160315954?v=4",[0m
+2025-06-26T07:51:14.7579859Z [36;1m      "events_url": "https://api.github.com/users/msdeepak052/events{/privacy}",[0m
+2025-06-26T07:51:14.7580753Z [36;1m      "followers_url": "https://api.github.com/users/msdeepak052/followers",[0m
+2025-06-26T07:51:14.7581685Z [36;1m      "following_url": "https://api.github.com/users/msdeepak052/following{/other_user}",[0m
+2025-06-26T07:51:14.7582596Z [36;1m      "gists_url": "https://api.github.com/users/msdeepak052/gists{/gist_id}",[0m
+2025-06-26T07:51:14.7583267Z [36;1m      "gravatar_id": "",[0m
+2025-06-26T07:51:14.7583792Z [36;1m      "html_url": "https://github.com/msdeepak052",[0m
+2025-06-26T07:51:14.7584526Z [36;1m      "id": 160315954,[0m
+2025-06-26T07:51:14.7584976Z [36;1m      "login": "msdeepak052",[0m
+2025-06-26T07:51:14.7585466Z [36;1m      "node_id": "U_kgDOCY46Mg",[0m
+2025-06-26T07:51:14.7586134Z [36;1m      "organizations_url": "https://api.github.com/users/msdeepak052/orgs",[0m
+2025-06-26T07:51:14.7587050Z [36;1m      "received_events_url": "https://api.github.com/users/msdeepak052/received_events",[0m
+2025-06-26T07:51:14.7588159Z [36;1m      "repos_url": "https://api.github.com/users/msdeepak052/repos",[0m
+2025-06-26T07:51:14.7588807Z [36;1m      "site_admin": false,[0m
+2025-06-26T07:51:14.7589525Z [36;1m      "starred_url": "https://api.github.com/users/msdeepak052/starred{/owner}{/repo}",[0m
+2025-06-26T07:51:14.7590490Z [36;1m      "subscriptions_url": "https://api.github.com/users/msdeepak052/subscriptions",[0m
+2025-06-26T07:51:14.7591206Z [36;1m      "type": "User",[0m
+2025-06-26T07:51:14.7591774Z [36;1m      "url": "https://api.github.com/users/msdeepak052",[0m
+2025-06-26T07:51:14.7592366Z [36;1m      "user_view_type": "public"[0m
+2025-06-26T07:51:14.7592833Z [36;1m    },[0m
+2025-06-26T07:51:14.7593360Z [36;1m    "workflow": ".github/workflows/18. Expression-Contexts-ex.yaml"[0m
+2025-06-26T07:51:14.7593984Z [36;1m  },[0m
+2025-06-26T07:51:14.7594893Z [36;1m  "workflow_ref": "msdeepak052/GitHub_Actions_Learnings_Scripts/.github/workflows/18. Expression-Contexts-ex.yaml@refs/heads/main",[0m
+2025-06-26T07:51:14.7596054Z [36;1m  "workflow_sha": "281a74085f8b10a19c6a5b332893d3543a5dd070",[0m
+2025-06-26T07:51:14.7596688Z [36;1m  "repository_id": "1006468321",[0m
+2025-06-26T07:51:14.7597194Z [36;1m  "triggering_actor": "msdeepak052",[0m
+2025-06-26T07:51:14.7598299Z [36;1m  "workspace": "/home/runner/work/GitHub_Actions_Learnings_Scripts/GitHub_Actions_Learnings_Scripts",[0m
+2025-06-26T07:51:14.7599151Z [36;1m  "action": "__run",[0m
+2025-06-26T07:51:14.7599749Z [36;1m  "event_path": "/home/runner/work/_temp/_github_workflow/event.json",[0m
+2025-06-26T07:51:14.7600442Z [36;1m  "action_repository": "",[0m
+2025-06-26T07:51:14.7600907Z [36;1m  "action_ref": "",[0m
+2025-06-26T07:51:14.7602012Z [36;1m  "path": "/home/runner/work/_temp/_runner_file_commands/add_path_3894963a-47a2-41e1-8a8f-f7784871e1a5",[0m
+2025-06-26T07:51:14.7603293Z [36;1m  "env": "/home/runner/work/_temp/_runner_file_commands/set_env_3894963a-47a2-41e1-8a8f-f7784871e1a5",[0m
+2025-06-26T07:51:14.7604538Z [36;1m  "step_summary": "/home/runner/work/_temp/_runner_file_commands/step_summary_3894963a-47a2-41e1-8a8f-f7784871e1a5",[0m
+2025-06-26T07:51:14.7605779Z [36;1m  "state": "/home/runner/work/_temp/_runner_file_commands/save_state_3894963a-47a2-41e1-8a8f-f7784871e1a5",[0m
+2025-06-26T07:51:14.7606983Z [36;1m  "output": "/home/runner/work/_temp/_runner_file_commands/set_output_3894963a-47a2-41e1-8a8f-f7784871e1a5"[0m
+2025-06-26T07:51:14.7608114Z [36;1m}'[0m
+2025-06-26T07:51:14.7608458Z [36;1mecho '{[0m
+2025-06-26T07:51:14.7608845Z [36;1m  "status": "success"[0m
+2025-06-26T07:51:14.7609266Z [36;1m}'[0m
+2025-06-26T07:51:14.7609606Z [36;1mecho '{[0m
+2025-06-26T07:51:14.7610222Z [36;1m  "github_token": "***"[0m
+2025-06-26T07:51:14.7610662Z [36;1m}'[0m
+2025-06-26T07:51:14.7611000Z [36;1mecho '{[0m
+2025-06-26T07:51:14.7611378Z [36;1m  "expressions": {[0m
+2025-06-26T07:51:14.7611834Z [36;1m    "outputs": {},[0m
+2025-06-26T07:51:14.7612257Z [36;1m    "outcome": "success",[0m
+2025-06-26T07:51:14.7612719Z [36;1m    "conclusion": "success"[0m
+2025-06-26T07:51:14.7613167Z [36;1m  }[0m
+2025-06-26T07:51:14.7613508Z [36;1m}'[0m
+2025-06-26T07:51:14.7613845Z [36;1mecho '{[0m
+2025-06-26T07:51:14.7614211Z [36;1m  "os": "Linux",[0m
+2025-06-26T07:51:14.7614617Z [36;1m  "arch": "X64",[0m
+2025-06-26T07:51:14.7615070Z [36;1m  "name": "GitHub Actions 1000000048",[0m
+2025-06-26T07:51:14.7615622Z [36;1m  "environment": "github-hosted",[0m
+2025-06-26T07:51:14.7616154Z [36;1m  "tool_cache": "/opt/hostedtoolcache",[0m
+2025-06-26T07:51:14.7616870Z [36;1m  "temp": "/home/runner/work/_temp",[0m
+2025-06-26T07:51:14.7617725Z [36;1m  "workspace": "/home/runner/work/GitHub_Actions_Learnings_Scripts"[0m
+2025-06-26T07:51:14.7618392Z [36;1m}'[0m
+2025-06-26T07:51:14.7676225Z shell: /usr/bin/bash -e {0}
+2025-06-26T07:51:14.7676690Z ##[endgroup]
+2025-06-26T07:51:14.7757687Z {
+2025-06-26T07:51:14.7758614Z   "token": "***",
+2025-06-26T07:51:14.7759153Z   "job": "using-expressions-and-contexts",
+2025-06-26T07:51:14.7759739Z   "ref": "refs/heads/main",
+2025-06-26T07:51:14.7760216Z   "sha": "281a74085f8b10a19c6a5b332893d3543a5dd070",
+2025-06-26T07:51:14.7761370Z   "repository": "msdeepak052/GitHub_Actions_Learnings_Scripts",
+2025-06-26T07:51:14.7762451Z   "repository_owner": "msdeepak052",
+2025-06-26T07:51:14.7763109Z   "repository_owner_id": "160315954",
+2025-06-26T07:51:14.7763860Z   "repositoryUrl": "git://github.com/msdeepak052/GitHub_Actions_Learnings_Scripts.git",
+2025-06-26T07:51:14.7764589Z   "run_id": "15896135909",
+2025-06-26T07:51:14.7765021Z   "run_number": "1",
+2025-06-26T07:51:14.7765416Z   "retention_days": "90",
+2025-06-26T07:51:14.7765829Z   "run_attempt": "1",
+2025-06-26T07:51:14.7766242Z   "artifact_cache_size_limit": "10",
+2025-06-26T07:51:14.7766734Z   "repository_visibility": "public",
+2025-06-26T07:51:14.7767213Z   "actor_id": "160315954",
+2025-06-26T07:51:14.7767877Z   "actor": "msdeepak052",
+2025-06-26T07:51:14.7768330Z   "workflow": "Expressions & Contexts",
+2025-06-26T07:51:14.7768810Z   "head_ref": "",
+2025-06-26T07:51:14.7769178Z   "base_ref": "",
+2025-06-26T07:51:14.7769561Z   "event_name": "workflow_dispatch",
+2025-06-26T07:51:14.7770075Z   "server_url": "https://github.com",
+2025-06-26T07:51:14.7770586Z   "api_url": "https://api.github.com",
+2025-06-26T07:51:14.7771140Z   "graphql_url": "https://api.github.com/graphql",
+2025-06-26T07:51:14.7771680Z   "ref_name": "main",
+2025-06-26T07:51:14.7772073Z   "ref_protected": false,
+2025-06-26T07:51:14.7772499Z   "ref_type": "branch",
+2025-06-26T07:51:14.7772900Z   "secret_source": "Actions",
+2025-06-26T07:51:14.7773331Z   "event": {
+2025-06-26T07:51:14.7773679Z     "inputs": null,
+2025-06-26T07:51:14.7774055Z     "ref": "refs/heads/main",
+2025-06-26T07:51:14.7774485Z     "repository": {
+2025-06-26T07:51:14.7774870Z       "allow_forking": true,
+2025-06-26T07:51:14.7775921Z       "archive_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/{archive_format}{/ref}",
+2025-06-26T07:51:14.7776823Z       "archived": false,
+2025-06-26T07:51:14.7777772Z       "assignees_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/assignees{/user}",
+2025-06-26T07:51:14.7778985Z       "blobs_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/git/blobs{/sha}",
+2025-06-26T07:51:14.7780188Z       "branches_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/branches{/branch}",
+2025-06-26T07:51:14.7781299Z       "clone_url": "https://github.com/msdeepak052/GitHub_Actions_Learnings_Scripts.git",
+2025-06-26T07:51:14.7782504Z       "collaborators_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/collaborators{/collaborator}",
+2025-06-26T07:51:14.7783893Z       "comments_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/comments{/number}",
+2025-06-26T07:51:14.7785133Z       "commits_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/commits{/sha}",
+2025-06-26T07:51:14.7786384Z       "compare_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/compare/{base}...{head}",
+2025-06-26T07:51:14.7787754Z       "contents_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/contents/{+path}",
+2025-06-26T07:51:14.7789006Z       "contributors_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/contributors",
+2025-06-26T07:51:14.7789893Z       "created_at": "2025-06-22T10:44:45Z",
+2025-06-26T07:51:14.7790378Z       "default_branch": "main",
+2025-06-26T07:51:14.7791322Z       "deployments_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/deployments",
+2025-06-26T07:51:14.7792177Z       "description": null,
+2025-06-26T07:51:14.7792590Z       "disabled": false,
+2025-06-26T07:51:14.7793348Z       "downloads_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/downloads",
+2025-06-26T07:51:14.7794471Z       "events_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/events",
+2025-06-26T07:51:14.7795262Z       "fork": false,
+2025-06-26T07:51:14.7795633Z       "forks": 0,
+2025-06-26T07:51:14.7796069Z       "forks_count": 0,
+2025-06-26T07:51:14.7796764Z       "forks_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/forks",
+2025-06-26T07:51:14.7797869Z       "full_name": "msdeepak052/GitHub_Actions_Learnings_Scripts",
+2025-06-26T07:51:14.7798855Z       "git_commits_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/git/commits{/sha}",
+2025-06-26T07:51:14.7800092Z       "git_refs_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/git/refs{/sha}",
+2025-06-26T07:51:14.7801259Z       "git_tags_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/git/tags{/sha}",
+2025-06-26T07:51:14.7802277Z       "git_url": "git://github.com/msdeepak052/GitHub_Actions_Learnings_Scripts.git",
+2025-06-26T07:51:14.7802955Z       "has_discussions": false,
+2025-06-26T07:51:14.7803393Z       "has_downloads": true,
+2025-06-26T07:51:14.7803814Z       "has_issues": true,
+2025-06-26T07:51:14.7804221Z       "has_pages": false,
+2025-06-26T07:51:14.7804639Z       "has_projects": true,
+2025-06-26T07:51:14.7805046Z       "has_wiki": true,
+2025-06-26T07:51:14.7805437Z       "homepage": null,
+2025-06-26T07:51:14.7806119Z       "hooks_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/hooks",
+2025-06-26T07:51:14.7807084Z       "html_url": "https://github.com/msdeepak052/GitHub_Actions_Learnings_Scripts",
+2025-06-26T07:51:14.7807852Z       "id": 1006468321,
+2025-06-26T07:51:14.7808235Z       "is_template": false,
+2025-06-26T07:51:14.7809248Z       "issue_comment_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/issues/comments{/number}",
+2025-06-26T07:51:14.7810622Z       "issue_events_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/issues/events{/number}",
+2025-06-26T07:51:14.7811891Z       "issues_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/issues{/number}",
+2025-06-26T07:51:14.7813041Z       "keys_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/keys{/key_id}",
+2025-06-26T07:51:14.7814208Z       "labels_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/labels{/name}",
+2025-06-26T07:51:14.7815025Z       "language": null,
+2025-06-26T07:51:14.7815764Z       "languages_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/languages",
+2025-06-26T07:51:14.7816589Z       "license": null,
+2025-06-26T07:51:14.7817274Z       "merges_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/merges",
+2025-06-26T07:51:14.7818631Z       "milestones_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/milestones{/number}",
+2025-06-26T07:51:14.7819518Z       "mirror_url": null,
+2025-06-26T07:51:14.7819955Z       "name": "GitHub_Actions_Learnings_Scripts",
+2025-06-26T07:51:14.7820462Z       "node_id": "R_kgDOO_184Q",
+2025-06-26T07:51:14.7821466Z       "notifications_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/notifications{?since,all,participating}",
+2025-06-26T07:51:14.7822522Z       "open_issues": 1,
+2025-06-26T07:51:14.7822917Z       "open_issues_count": 1,
+2025-06-26T07:51:14.7823337Z       "owner": {
+2025-06-26T07:51:14.7823873Z         "avatar_url": "https://avatars.githubusercontent.com/u/160315954?v=4",
+2025-06-26T07:51:14.7824812Z         "events_url": "https://api.github.com/users/msdeepak052/events{/privacy}",
+2025-06-26T07:51:14.7825630Z         "followers_url": "https://api.github.com/users/msdeepak052/followers",
+2025-06-26T07:51:14.7826512Z         "following_url": "https://api.github.com/users/msdeepak052/following{/other_user}",
+2025-06-26T07:51:14.7827376Z         "gists_url": "https://api.github.com/users/msdeepak052/gists{/gist_id}",
+2025-06-26T07:51:14.7828114Z         "gravatar_id": "",
+2025-06-26T07:51:14.7828589Z         "html_url": "https://github.com/msdeepak052",
+2025-06-26T07:51:14.7829103Z         "id": 160315954,
+2025-06-26T07:51:14.7829506Z         "login": "msdeepak052",
+2025-06-26T07:51:14.7829949Z         "node_id": "U_kgDOCY46Mg",
+2025-06-26T07:51:14.7830578Z         "organizations_url": "https://api.github.com/users/msdeepak052/orgs",
+2025-06-26T07:51:14.7831439Z         "received_events_url": "https://api.github.com/users/msdeepak052/received_events",
+2025-06-26T07:51:14.7832259Z         "repos_url": "https://api.github.com/users/msdeepak052/repos",
+2025-06-26T07:51:14.7832849Z         "site_admin": false,
+2025-06-26T07:51:14.7833475Z         "starred_url": "https://api.github.com/users/msdeepak052/starred{/owner}{/repo}",
+2025-06-26T07:51:14.7834371Z         "subscriptions_url": "https://api.github.com/users/msdeepak052/subscriptions",
+2025-06-26T07:51:14.7835058Z         "type": "User",
+2025-06-26T07:51:14.7835509Z         "url": "https://api.github.com/users/msdeepak052",
+2025-06-26T07:51:14.7836060Z         "user_view_type": "public"
+2025-06-26T07:51:14.7836491Z       },
+2025-06-26T07:51:14.7836829Z       "private": false,
+2025-06-26T07:51:14.7838030Z       "pulls_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/pulls{/number}",
+2025-06-26T07:51:14.7838986Z       "pushed_at": "2025-06-26T07:50:41Z",
+2025-06-26T07:51:14.7839832Z       "releases_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/releases{/id}",
+2025-06-26T07:51:14.7840661Z       "size": 259,
+2025-06-26T07:51:14.7841212Z       "ssh_url": "git@github.com:msdeepak052/GitHub_Actions_Learnings_Scripts.git",
+2025-06-26T07:51:14.7841892Z       "stargazers_count": 0,
+2025-06-26T07:51:14.7842812Z       "stargazers_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/stargazers",
+2025-06-26T07:51:14.7844014Z       "statuses_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/statuses/{sha}",
+2025-06-26T07:51:14.7845227Z       "subscribers_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/subscribers",
+2025-06-26T07:51:14.7846462Z       "subscription_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/subscription",
+2025-06-26T07:51:14.7847622Z       "svn_url": "https://github.com/msdeepak052/GitHub_Actions_Learnings_Scripts",
+2025-06-26T07:51:14.7848565Z       "tags_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/tags",
+2025-06-26T07:51:14.7849602Z       "teams_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/teams",
+2025-06-26T07:51:14.7850367Z       "topics": [],
+2025-06-26T07:51:14.7851102Z       "trees_url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts/git/trees{/sha}",
+2025-06-26T07:51:14.7851943Z       "updated_at": "2025-06-26T07:50:45Z",
+2025-06-26T07:51:14.7852652Z       "url": "https://api.github.com/repos/msdeepak052/GitHub_Actions_Learnings_Scripts",
+2025-06-26T07:51:14.7853353Z       "visibility": "public",
+2025-06-26T07:51:14.7853779Z       "watchers": 0,
+2025-06-26T07:51:14.7854156Z       "watchers_count": 0,
+2025-06-26T07:51:14.7854592Z       "web_commit_signoff_required": false
+2025-06-26T07:51:14.7855050Z     },
+2025-06-26T07:51:14.7855372Z     "sender": {
+2025-06-26T07:51:14.7855903Z       "avatar_url": "https://avatars.githubusercontent.com/u/160315954?v=4",
+2025-06-26T07:51:14.7856736Z       "events_url": "https://api.github.com/users/msdeepak052/events{/privacy}",
+2025-06-26T07:51:14.7857823Z       "followers_url": "https://api.github.com/users/msdeepak052/followers",
+2025-06-26T07:51:14.7858685Z       "following_url": "https://api.github.com/users/msdeepak052/following{/other_user}",
+2025-06-26T07:51:14.7859581Z       "gists_url": "https://api.github.com/users/msdeepak052/gists{/gist_id}",
+2025-06-26T07:51:14.7860213Z       "gravatar_id": "",
+2025-06-26T07:51:14.7860789Z       "html_url": "https://github.com/msdeepak052",
+2025-06-26T07:51:14.7861450Z       "id": 160315954,
+2025-06-26T07:51:14.7861851Z       "login": "msdeepak052",
+2025-06-26T07:51:14.7862304Z       "node_id": "U_kgDOCY46Mg",
+2025-06-26T07:51:14.7862993Z       "organizations_url": "https://api.github.com/users/msdeepak052/orgs",
+2025-06-26T07:51:14.7863855Z       "received_events_url": "https://api.github.com/users/msdeepak052/received_events",
+2025-06-26T07:51:14.7864664Z       "repos_url": "https://api.github.com/users/msdeepak052/repos",
+2025-06-26T07:51:14.7865252Z       "site_admin": false,
+2025-06-26T07:51:14.7865868Z       "starred_url": "https://api.github.com/users/msdeepak052/starred{/owner}{/repo}",
+2025-06-26T07:51:14.7866759Z       "subscriptions_url": "https://api.github.com/users/msdeepak052/subscriptions",
+2025-06-26T07:51:14.7867544Z       "type": "User",
+2025-06-26T07:51:14.7868001Z       "url": "https://api.github.com/users/msdeepak052",
+2025-06-26T07:51:14.7868539Z       "user_view_type": "public"
+2025-06-26T07:51:14.7868958Z     },
+2025-06-26T07:51:14.7869426Z     "workflow": ".github/workflows/18. Expression-Contexts-ex.yaml"
+2025-06-26T07:51:14.7870006Z   },
+2025-06-26T07:51:14.7870869Z   "workflow_ref": "msdeepak052/GitHub_Actions_Learnings_Scripts/.github/workflows/18. Expression-Contexts-ex.yaml@refs/heads/main",
+2025-06-26T07:51:14.7871986Z   "workflow_sha": "281a74085f8b10a19c6a5b332893d3543a5dd070",
+2025-06-26T07:51:14.7872561Z   "repository_id": "1006468321",
+2025-06-26T07:51:14.7873018Z   "triggering_actor": "msdeepak052",
+2025-06-26T07:51:14.7873809Z   "workspace": "/home/runner/work/GitHub_Actions_Learnings_Scripts/GitHub_Actions_Learnings_Scripts",
+2025-06-26T07:51:14.7874615Z   "action": "__run",
+2025-06-26T07:51:14.7875135Z   "event_path": "/home/runner/work/_temp/_github_workflow/event.json",
+2025-06-26T07:51:14.7875928Z   "action_repository": "",
+2025-06-26T07:51:14.7876339Z   "action_ref": "",
+2025-06-26T07:51:14.7877026Z   "path": "/home/runner/work/_temp/_runner_file_commands/add_path_3894963a-47a2-41e1-8a8f-f7784871e1a5",
+2025-06-26T07:51:14.7878338Z   "env": "/home/runner/work/_temp/_runner_file_commands/set_env_3894963a-47a2-41e1-8a8f-f7784871e1a5",
+2025-06-26T07:51:14.7879481Z   "step_summary": "/home/runner/work/_temp/_runner_file_commands/step_summary_3894963a-47a2-41e1-8a8f-f7784871e1a5",
+2025-06-26T07:51:14.7880660Z   "state": "/home/runner/work/_temp/_runner_file_commands/save_state_3894963a-47a2-41e1-8a8f-f7784871e1a5",
+2025-06-26T07:51:14.7881777Z   "output": "/home/runner/work/_temp/_runner_file_commands/set_output_3894963a-47a2-41e1-8a8f-f7784871e1a5"
+2025-06-26T07:51:14.7882571Z }
+2025-06-26T07:51:14.7882874Z {
+2025-06-26T07:51:14.7883199Z   "status": "success"
+2025-06-26T07:51:14.7883563Z }
+2025-06-26T07:51:14.7883868Z {
+2025-06-26T07:51:14.7884376Z   "github_token": "***"
+2025-06-26T07:51:14.7884758Z }
+2025-06-26T07:51:14.7885073Z {
+2025-06-26T07:51:14.7885389Z   "expressions": {
+2025-06-26T07:51:14.7885770Z     "outputs": {},
+2025-06-26T07:51:14.7886140Z     "outcome": "success",
+2025-06-26T07:51:14.7886549Z     "conclusion": "success"
+2025-06-26T07:51:14.7886946Z   }
+2025-06-26T07:51:14.7887261Z }
+2025-06-26T07:51:14.7887669Z {
+2025-06-26T07:51:14.7887983Z   "os": "Linux",
+2025-06-26T07:51:14.7888339Z   "arch": "X64",
+2025-06-26T07:51:14.7888710Z   "name": "GitHub Actions 1000000048",
+2025-06-26T07:51:14.7889193Z   "environment": "github-hosted",
+2025-06-26T07:51:14.7889659Z   "tool_cache": "/opt/hostedtoolcache",
+2025-06-26T07:51:14.7890153Z   "temp": "/home/runner/work/_temp",
+2025-06-26T07:51:14.7890746Z   "workspace": "/home/runner/work/GitHub_Actions_Learnings_Scripts"
+2025-06-26T07:51:14.7891477Z }
+2025-06-26T07:51:14.7939236Z Cleaning up orphan processes
