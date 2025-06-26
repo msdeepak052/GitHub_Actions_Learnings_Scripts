@@ -382,3 +382,150 @@ jobs:
    - Document important variables in comments
 
 These examples demonstrate practical uses of environment variables in CI/CD pipelines, testing workflows, and multi-environment deployments.
+
+
+
+📘 **Reference:**
+[GitHub Docs – Setting Environment Variables During Execution](https://docs.github.com/en/actions/how-to/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#set-an-environment-variable-in-a-shell-script)
+
+---
+
+## 🎯 What Are "Runtime" or "Dynamic" Environment Variables?
+
+These are **not defined statically** in the workflow YAML file.
+They are created or modified during a workflow step (at **runtime**) and used in **subsequent steps**.
+
+---
+
+## ✅ How to Set Them
+
+To set environment variables **that persist across steps**, you **must write them to a special file**:
+
+```bash
+echo "MY_VAR=value" >> $GITHUB_ENV
+```
+
+---
+
+## 💼 Real-Life Example: Dynamic Docker Tag Based on Git Commit and Date
+
+```yaml
+name: Dynamic Docker Tagging
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generate dynamic Docker tag
+        run: |
+          COMMIT_HASH=${GITHUB_SHA::7}
+          DATE_TAG=$(date +'%Y%m%d-%H%M')
+          TAG="myapp-${COMMIT_HASH}-${DATE_TAG}"
+          echo "DOCKER_TAG=$TAG" >> $GITHUB_ENV
+          echo "Docker tag generated: $TAG"
+
+      - name: Build and tag Docker image
+        run: |
+          docker build -t myorg/myapp:$DOCKER_TAG .
+
+      - name: Push to DockerHub
+        run: |
+          docker push myorg/myapp:$DOCKER_TAG
+```
+
+### 💡 Breakdown:
+
+* `COMMIT_HASH` and `DATE_TAG` are created during step runtime.
+* These are then written into `GITHUB_ENV`.
+* Later steps can use `$DOCKER_TAG`.
+
+---
+
+## 🏗️ Example 2: Slack Message Conditional Text Based on Branch Name
+
+```yaml
+name: Notify Slack Conditionally
+
+on:
+  push:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set message based on branch
+        run: |
+          if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
+            echo "SLACK_MESSAGE=🚀 Production deployed!" >> $GITHUB_ENV
+          else
+            echo "SLACK_MESSAGE=🔧 Dev/Feature branch updated." >> $GITHUB_ENV
+
+      - name: Notify Slack
+        run: ./scripts/slack-notify.sh "$SLACK_MESSAGE"
+```
+
+📌 **Use Case**:
+
+* Dynamically set different messages depending on whether the deployment was to `main` or a feature branch.
+
+---
+
+## 🛠️ Example 3: Export and Use Path or Credentials for Terraform
+
+```yaml
+name: Terraform Apply
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set AWS Region and Profile
+        run: |
+          echo "AWS_REGION=ap-south-1" >> $GITHUB_ENV
+          echo "AWS_PROFILE=terraform-deployer" >> $GITHUB_ENV
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Plan Infra
+        run: terraform plan -var="region=$AWS_REGION"
+
+      - name: Apply Infra
+        run: terraform apply -auto-approve -var="region=$AWS_REGION"
+```
+
+🔍 `AWS_REGION` and `AWS_PROFILE` are set dynamically and used in multiple steps later.
+
+---
+
+## ⚠️ Key Rules to Remember
+
+| Rule                                                          | Description                                          |
+| ------------------------------------------------------------- | ---------------------------------------------------- |
+| `$GITHUB_ENV`                                                 | File to write new env vars that persist across steps |
+| Variables set this way must be **echoed** to `$GITHUB_ENV`    | `echo "VAR=value" >> $GITHUB_ENV`                    |
+| These are **not available in the same step** they are created | Only in **subsequent steps**                         |
+| Use standard `export VAR=value` for same-step env usage       | For temp step-only variables                         |
+
+---
+
+## 📚 Reference
+
+🔗 [GitHub Docs – Set an Environment Variable in a Shell Script](https://docs.github.com/en/actions/how-to/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#set-an-environment-variable-in-a-shell-script)
+
+---
+
