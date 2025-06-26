@@ -529,3 +529,88 @@ jobs:
 
 ---
 
+#### Understanding the role of `GITHUB_ENV` is **critical** for managing environment variables **across steps** in GitHub Actions.
+
+---
+
+## ✅ TL;DR
+
+| With `GITHUB_ENV`                                   | Without `GITHUB_ENV`                                   |
+| --------------------------------------------------- | ------------------------------------------------------ |
+| Makes env variable **available in future steps**    | Variable is **only available within the current step** |
+| Used to **persist values dynamically** across steps | Useful for **temporary use** only in one `run:` block  |
+| File-based mechanism GitHub uses internally         | Just shell-level variable in that step                 |
+
+---
+
+## 🔍 Example Analysis
+
+### ✨ Step 1: Dynamically create a Docker tag
+
+```yaml
+- name: Generate dynamic Docker tag
+  run: |
+    COMMIT_HASH=${GITHUB_SHA::7}
+    DATE_TAG=$(date +'%Y%m%d-%H%M')
+    TAG="myapp-${COMMIT_HASH}-${DATE_TAG}"
+
+    echo "DOCKER_TAG=$TAG" >> $GITHUB_ENV
+    echo "Docker tag generated: $TAG"
+```
+
+* `echo "DOCKER_TAG=$TAG" >> $GITHUB_ENV` **writes to a file that GitHub reads after the step** to inject `DOCKER_TAG` into **future steps as a real environment variable**.
+
+---
+
+### ⚙️ Step 2: Use the variable
+
+```yaml
+- name: Build and tag Docker image
+  run: |
+    echo "Building Docker image with tag: $DOCKER_TAG"
+```
+
+* This works **only because `DOCKER_TAG` was set using `$GITHUB_ENV`**.
+* If you did **not use `$GITHUB_ENV`**, this step would print:
+  👉 `Building Docker image with tag:` (empty).
+
+---
+
+## 🧪 Without `GITHUB_ENV` (what goes wrong)
+
+```yaml
+- name: Generate Docker tag without GITHUB_ENV
+  run: |
+    TAG="myapp-${GITHUB_SHA::7}-$(date +'%Y%m%d-%H%M')"
+    echo "Docker tag generated: $TAG"
+```
+
+Then later:
+
+```yaml
+- name: Use tag
+  run: |
+    echo "Using Docker tag: $TAG"  # ❌ This will be empty
+```
+
+Because `TAG` only existed **inside the first step’s shell**, and **not shared across steps**.
+
+---
+
+## 📝 Summary: When to Use `GITHUB_ENV`
+
+| Situation                                             | Use                                        |
+| ----------------------------------------------------- | ------------------------------------------ |
+| Value needed only in current step                     | ❌ No need for `GITHUB_ENV`                 |
+| Value needed in **next** or **multiple steps**        | ✅ Use `GITHUB_ENV`                         |
+| You want dynamic tagging, versioning, or flow control | ✅ `GITHUB_ENV` is essential                |
+| You need secrets or sensitive data                    | ❌ Use GitHub **Secrets**, not `GITHUB_ENV` |
+
+---
+
+## 📘 Official Doc Link
+
+[🔗 GitHub Docs – Set an environment variable in a shell script](https://docs.github.com/en/actions/how-to/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#set-an-environment-variable-in-a-shell-script)
+
+---
+
