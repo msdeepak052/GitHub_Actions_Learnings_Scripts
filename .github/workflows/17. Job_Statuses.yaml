@@ -1,5 +1,6 @@
-name: Dependent Jobs
-on: push
+name: Dependent Jobs -17
+on:
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
   build:
@@ -9,6 +10,9 @@ jobs:
     steps:
       - id: set-output
         run: echo "build_id=$(date +%s)" >> $GITHUB_OUTPUT
+      - name: Show Build ID
+        run: echo "Build ID is ${{ steps.set-output.outputs.build_id }}"
+    
 
   test:
     needs: build
