@@ -1,0 +1,44 @@
+name: System Operations Workflow
+
+on:
+  workflow_dispatch:  # Allows manual trigger
+  
+jobs:
+  system-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15  # Entire job will timeout after 15 minutes
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Run disk check (allowed to fail)
+      continue-on-error: true
+      run: |
+        df -h
+        du -sh .
+        
+    - name: Run long operation with timeout
+      timeout-minutes: 5  # This specific step times out after 5 minutes
+      run: |
+        echo "Starting resource-intensive operation..."
+        # Simulate a long-running process
+        sleep 300
+        echo "This line won't be reached if sleep takes more than 5 minutes"
+        
+    - name: Critical system check
+      run: |
+        free -m
+        nproc
+        
+    - name: Run Python script (allowed to fail)
+      continue-on-error: true
+      run: |
+        python3 -c "
+        print('Starting Python operation')
+        # This would fail if python3 isn't available
+        import missing_module  # This will fail
+        "
+        
+    - name: Final cleanup
+      run: echo "Cleanup completed"
