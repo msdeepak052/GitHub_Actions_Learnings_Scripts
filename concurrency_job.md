@@ -1,0 +1,181 @@
+# Running a Single Job or Workflow at a Time Using Concurrency in GitHub Actions
+
+GitHub Actions provides a `concurrency` feature that lets you control how multiple workflow runs or jobs interact with each other. This is especially useful when you want to:
+
+1. Prevent multiple workflow runs from executing simultaneously
+2. Cancel previous runs when a new one starts
+3. Ensure only one instance of a job runs at a time
+
+## Basic Concurrency Concepts
+
+### Concurrency Groups
+You can define concurrency groups using the `concurrency` key in your workflow. All jobs in the same concurrency group will follow the same rules.
+
+### Canceling In-Progress Runs
+When using `cancel-in-progress: true`, GitHub will automatically cancel any existing runs in the same concurrency group when a new one starts.
+
+
+### 📌 Purpose:
+
+The `concurrency` keyword in GitHub Actions **ensures that only one instance of a job or workflow runs at a time** based on a unique key.
+
+This is useful when:
+
+* You want to avoid multiple deployments running simultaneously.
+* You want the latest workflow run to cancel any previous in-progress ones (like in CI/CD pipelines).
+
+---
+
+## 🧠 How It Works
+
+```yaml
+concurrency:
+  group: <unique-key>
+  cancel-in-progress: true|false
+```
+
+* **`group`**: A string or expression that defines the lock. Workflows sharing the same group key run **one at a time**.
+* **`cancel-in-progress`**: If `true`, cancels any currently running job with the same group key before starting the new one.
+
+---
+
+## Examples
+
+### Example 1: Single Workflow at a Time
+```yaml
+name: Deployment Workflow
+on: push
+
+concurrency: 
+  group: deployment-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying to ${{ github.ref }}"
+```
+
+This ensures:
+- Only one deployment runs per branch at a time
+- If a new push happens while a deployment is running, the previous one gets canceled
+
+### Example 2: Job-Level Concurrency
+```yaml
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    concurrency: test-group
+    steps:
+      - run: echo "Running tests..."
+  
+  build:
+    runs-on: ubuntu-latest
+    concurrency: build-group
+    steps:
+      - run: echo "Building artifacts..."
+```
+
+This ensures:
+- Only one test job runs at a time (all others queue)
+- Only one build job runs at a time (all others queue)
+- Test and build jobs can run simultaneously with each other
+
+### Example 3: Environment-Specific Concurrency
+```yaml
+name: Production Deployment
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+
+concurrency: 
+  group: deploy-${{ github.event.inputs.environment }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying to ${{ github.event.inputs.environment }}"
+```
+
+This ensures:
+- Only one deployment runs per environment at a time
+- If you trigger a new deployment to "production" while one is running, the previous one gets canceled
+
+
+
+
+## 🔧 Example 1: Single Workflow at a Time (Simple Key)
+
+```yaml
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+concurrency:
+  group: prod-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print
+        run: echo "Deploying application..."
+```
+
+📝 This ensures that **only one deployment to production runs at any time**.
+
+---
+
+## 🔧 Example 2: One Job Per Branch (Dynamic Group Key)
+
+```yaml
+name: Branch-Based Build Lock
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running build for ${{ github.ref }}"
+```
+
+📝 This ensures:
+
+* Builds on the **same branch** run one at a time.
+* Builds on **different branches** can run in parallel.
+
+---
+
+
+
+## When to Use Concurrency
+
+1. **Deployments**: Prevent multiple simultaneous deployments to the same environment
+2. **Scheduled Jobs**: Prevent overlapping runs of scheduled jobs
+3. **Resource-Intensive Jobs**: Limit concurrent executions of jobs that share resources
+4. **Sequential Processing**: Ensure jobs run in sequence rather than parallel
+## 📚 Official GitHub Docs Reference
+
+* 🔗 [GitHub Docs: Using concurrency](https://docs.github.com/en/actions/using-jobs/using-concurrency) - Official documentation on concurrency
+* 🔗 [GitHub Docs: Workflow syntax for concurrency](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency) - Syntax reference
+* 🔗 [GitHub Blog: New Features for GitHub Actions](https://github.blog/changelog/2021-04-19-github-actions-limit-workflow-run-or-job-concurrency/) - Announcement of the feature
+
+The concurrency feature is particularly valuable for production environments where you want to prevent race conditions or resource conflicts between workflow runs.
