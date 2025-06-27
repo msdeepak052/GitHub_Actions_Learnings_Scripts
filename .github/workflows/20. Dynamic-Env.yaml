@@ -1,9 +1,7 @@
 name: Dynamic Docker Tagging
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
   docker-build:
@@ -22,7 +20,8 @@ jobs:
           echo "Docker tag generated: $TAG"
 
       - name: Build and tag Docker image
-        run: echo "Building Docker image with tag: $DOCKER_TAG"
+        run: |
+          echo "Building Docker image with tag: $DOCKER_TAG"
         # run: |
         #   docker build -t myorg/myapp:$DOCKER_TAG .
 
