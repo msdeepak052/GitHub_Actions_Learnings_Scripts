@@ -1,5 +1,5 @@
-name: Reusable Workflow
-
+name: 25.1. resuable-outputs
+# This workflow demonstrates how to use reusable workflows with outputs.
 on:
   workflow_call:
     outputs:

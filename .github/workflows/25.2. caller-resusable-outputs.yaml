@@ -1,4 +1,4 @@
-name: Caller Workflow
+name: 25.2. caller-resusable-outputs
 
 on:
   workflow_dispatch:  # Allows manual triggering of the workflow
