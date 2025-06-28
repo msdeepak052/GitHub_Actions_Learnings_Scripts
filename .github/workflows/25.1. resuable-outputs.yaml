@@ -1,0 +1,34 @@
+name: Reusable Workflow
+
+on:
+  workflow_call:
+    outputs:
+      build-result:
+        description: "Result of the build process"
+        value: ${{ jobs.build.outputs.build-result }}
+      test-coverage:
+        description: "Test coverage percentage"
+        value: ${{ jobs.test.outputs.coverage }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      build-result: ${{ steps.set-build-output.outputs.result }}
+    steps:
+      - name: Build step
+        id: set-build-output
+        run: |
+          # Your build logic here
+          echo "result=success" >> $GITHUB_OUTPUT
+
+  test:
+    runs-on: ubuntu-latest
+    outputs:
+      coverage: ${{ steps.set-coverage-output.outputs.percentage }}
+    steps:
+      - name: Run tests
+        id: set-coverage-output
+        run: |
+          # Your test logic here
+          echo "percentage=95%" >> $GITHUB_OUTPUTss

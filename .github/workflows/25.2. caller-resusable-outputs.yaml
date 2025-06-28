@@ -1,0 +1,16 @@
+name: Caller Workflow
+
+on: [push]
+
+jobs:
+  call-reusable:
+    uses: ./.github/workflows/25.1. resuable-outputs.yaml
+  
+  use-outputs:
+    needs: call-reusable
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display outputs
+        run: |
+          echo "Build result: ${{ needs.call-reusable.outputs.build-result }}"
+          echo "Test coverage: ${{ needs.call-reusable.outputs.test-coverage }}
