@@ -1,5 +1,6 @@
-name: Build and Deploy
-on: [push]
+name: 26. Build and Deploy
+on:
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
   build:
