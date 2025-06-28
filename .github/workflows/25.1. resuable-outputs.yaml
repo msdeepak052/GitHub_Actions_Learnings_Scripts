@@ -31,4 +31,4 @@ jobs:
         id: set-coverage-output
         run: |
           # Your test logic here
-          echo "percentage=95%" >> $GITHUB_OUTPUTss
+          echo "percentage=95%" >> $GITHUB_OUTPUT

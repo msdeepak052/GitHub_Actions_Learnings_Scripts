@@ -1,6 +1,7 @@
 name: Caller Workflow
 
-on: [push]
+on:
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
   call-reusable:
