@@ -14,4 +14,4 @@ jobs:
       - name: Display outputs
         run: |
           echo "Build result: ${{ needs.call-reusable.outputs.build-result }}"
-          echo "Test coverage: ${{ needs.call-reusable.outputs.test-coverage }}
+          echo "Test coverage: ${{ needs.call-reusable.outputs.test-coverage }}"
