@@ -1,0 +1,11 @@
+{
+  "name": "dummy-node-project",
+  "version": "1.0.0",
+  "description": "A dummy project for testing GitHub Actions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Running dummy test...\" && exit 0"
+  },
+  "author": "Deepak",
+  "license": "ISC"
+}
