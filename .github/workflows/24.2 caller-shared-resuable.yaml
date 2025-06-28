@@ -1,0 +1,11 @@
+name: 24.2 caller-shared-resuable-workflow
+
+on:
+  workflow_dispatch:  # Allows manual trigge
+
+jobs:
+  call-shared-workflow:
+    uses: ./.github/workflows/24.1. shared-resuable.yaml
+    with:
+      node-version: '18.x'
+      environment: 'production'

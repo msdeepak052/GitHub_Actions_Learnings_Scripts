@@ -1,7 +1,8 @@
 # .github/workflows/deploy.yml
 name: Call Reusable Workflow
 
-on: [push]
+on:
+  workflow_dispatch:  # Allows manual trigge
 
 jobs:
   call-deploy:

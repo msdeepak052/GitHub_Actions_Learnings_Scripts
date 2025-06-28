@@ -1,0 +1,30 @@
+name: 24.1. shared-resuable-workflow
+# This workflow is reusable and can be called by other workflows.
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+      environment:
+        required: false
+        type: string
+        default: 'staging'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Use Node.js ${{ inputs.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+          
+      - run: npm install
+      - run: npm test
+      
+      - name: Show environment
+        run: echo "Deploying to ${{ inputs.environment }}"
