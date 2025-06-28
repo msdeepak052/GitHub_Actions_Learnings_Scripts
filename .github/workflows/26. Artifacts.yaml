@@ -37,6 +37,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: build-output
+        path: build/  # Specify the same path used when uploading
         
     - name: Show artifact contents
       run: |
