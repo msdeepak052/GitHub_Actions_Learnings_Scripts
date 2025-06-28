@@ -1,0 +1,10 @@
+# .github/workflows/deploy.yml
+name: Call Reusable Workflow
+
+on: [push]
+
+jobs:
+  call-deploy:
+    uses: ./.github/workflows/23.1. Reusable-Workflow.yaml@main
+    with:
+      environment: production
