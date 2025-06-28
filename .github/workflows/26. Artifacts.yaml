@@ -29,8 +29,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: view build directory in deploy
+      continue-on-error: true  # Continue even if the build directory doesn't exist
       run: |
         ls -l build/
+    
 
     - name: Download artifact
       uses: actions/download-artifact@v4
