@@ -5,6 +5,6 @@ on: [push]
 
 jobs:
   call-deploy:
-    uses: ./.github/workflows/23.1. Reusable-Workflow.yaml@main
+    uses: ./.github/workflows/23.1. Reusable-Workflow.yaml
     with:
       environment: production
