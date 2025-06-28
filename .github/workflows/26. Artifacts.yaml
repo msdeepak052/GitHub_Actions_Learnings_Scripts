@@ -18,15 +18,26 @@ jobs:
       with:
         name: build-output
         path: build/
+    
+    - name: view build output
+      run: |
+        ls -l build/
+        cat build/output.txt
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
+    - name: view build directory in deploy
+      run: |
+        ls -l build/
+
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
         name: build-output
         
     - name: Show artifact contents
-      run: cat build/output.txt
+      run: |
+        ls -l build/
+        cat build/output.txt
