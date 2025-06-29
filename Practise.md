@@ -89,7 +89,6 @@ Focuses on self-hosted runners, custom actions, publishing actions, deployment, 
 
 ---
 
-Thanks, Deepak! Got it — you're asking for **hands-on GitHub Actions workflow practice problems** (not theory/interview Qs), meaning actual **YAML-writing and scenario-based exercises** you can code and run. Below are **practice sets**, grouped into:
 
 * ✅ Beginner (20 hands-on workflow tasks)
 * ⚙️ Intermediate (20 practice scenarios)
